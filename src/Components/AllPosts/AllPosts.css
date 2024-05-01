@@ -1,0 +1,60 @@
+.post img {
+  width: 40px;
+}
+
+.all-posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+  margin: 0 auto;
+  border: 1px solid #f1f1f1;
+  background-color: #fffefecd;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.post {
+  max-width: 1300px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #f1f1f1;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  box-shadow: 1px 1px 3px black;
+}
+
+.personDetails {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+}
+
+.postContent {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.interactions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+
+.orderOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-left: 25em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
