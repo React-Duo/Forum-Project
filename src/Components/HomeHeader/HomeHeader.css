@@ -1,0 +1,67 @@
+.TopUser img {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+}
+
+.HomeHeader {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  padding: 10px;
+  gap: 70px;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto;
+  background-color: #fffefecd;
+}
+
+.HomeHeader h2{
+    padding-bottom: 15px;
+    font-size: 32px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.TopUsers {
+  height: 300px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.TopUsersList {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.TopUser {
+  display: flex;
+  flex-direction: row;
+}
+
+.CurrentStatus {
+  height: 300px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.CurrentStatusList {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.CurrentStatusList p{
+    margin-left: 15px;
+    color: rgba(28, 29, 29, 0.804);
+    padding-bottom: 20px;
+}
+
+.CurrentStatusList i {
+    padding-right: 10px;
+}
+
