@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, push, get, set, update, query, equalTo, orderByChild, orderByKey } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB5oOxHK0BHyFKt-v8K5MWVyoNRu_UxA7Y",
@@ -17,6 +17,18 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
+
+const getUsers = async () => {
+    const snapshot = await get(ref(database, 'comments/1'));
+    if (snapshot.exists()) {
+        return snapshot.val();
+    }
+    return 'Sorry, data not found.';
+}
+
+const result = await getUsers();
+console.log(result);
+
 
 
 
