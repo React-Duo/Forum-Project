@@ -61,10 +61,11 @@ export const getPosts = async () => {
     }
   } catch (error) {
     return error.message;
+  } finally{
+    goOffline(database);
   }
   
 };
 
 const posts = await getPosts();
 console.log(posts);
-goOffline(database);
