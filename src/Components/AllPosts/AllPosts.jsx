@@ -27,7 +27,7 @@ const AllPosts = (props) => {
             <i className="fa-solid fa-thumbs-up fa-lg"></i>3
           </p>
           <p>
-            <i class="fa-solid fa-comment fa-lg"></i>4
+            <i className="fa-solid fa-comment fa-lg"></i>4
           </p>
           <p>01.05.2024</p>
         </div>
