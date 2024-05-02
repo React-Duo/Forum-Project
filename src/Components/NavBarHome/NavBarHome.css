@@ -28,11 +28,11 @@
   border-radius: 50%;
 }
 
-#profileImg,
+/* #profileImg,
 #users-btn,
 #logout-btn {
   display: none;
-}
+} */
 
 .login-buttons-home button {
   font-size: 18px;
