@@ -17,10 +17,10 @@
   background-color: #fffefecd;
 }
 
-.HomeHeader h2{
-    padding-bottom: 15px;
-    font-size: 32px;
-    font-family: 'Courier New', Courier, monospace;
+.HomeHeader h2 {
+  padding-bottom: 15px;
+  font-size: 32px;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .TopUsers {
@@ -55,13 +55,42 @@
   padding-top: 20px;
 }
 
-.CurrentStatusList p{
-    margin-left: 15px;
-    color: rgba(28, 29, 29, 0.804);
-    padding-bottom: 20px;
+.CurrentStatusList p {
+  margin-left: 15px;
+  color: rgba(28, 29, 29, 0.804);
+  padding-bottom: 20px;
 }
 
 .CurrentStatusList i {
-    padding-right: 10px;
+  padding-right: 10px;
 }
 
+@media (max-width: 880px) {
+  .HomeHeader {
+    gap: 10px;
+  }
+
+  
+  .TopUsersList {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+}
+}
+
+@media (max-width: 650px) {
+  .HomeHeader {
+    grid-template-columns: auto ;
+  
+  }
+  
+  .TopUsersList {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+}
+
+.TopUsers {
+  height: auto;
+}
+}
