@@ -12,6 +12,8 @@ import Users from './Views/Users/Users';
 import Profile from './Views/Profile/Profile';
 import Authenticated from './hoc/Authenticated/Authenticated';
 import NotFound from './Views/NotFound/NotFound';
+import NavBarHome from "./Components/NavBarHome/NavBarHome";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   const[authValue, setAuthValue] = useState(false);
@@ -20,6 +22,7 @@ function App() {
     <>
       <BrowserRouter>
         <AuthContext.Provider value={{isLoggedIn: authValue, setLoginState: setAuthValue}}>
+        <NavBarHome logged={authValue}/>
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/login" element={<Login />}/>
@@ -31,6 +34,7 @@ function App() {
           <Route path="/profile" element={<Authenticated><Profile /></Authenticated>}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>
+        <Footer />
         </AuthContext.Provider>
       </BrowserRouter>
     </>
