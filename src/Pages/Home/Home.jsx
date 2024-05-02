@@ -8,7 +8,7 @@ import Footer from "../../Components/Footer/Footer";
 const Home = () => {
   return (
     <div>
-      <NavBarHome logged="true" />
+      <NavBarHome logged="false" />
       <HomeHeader />
 
       <div className="home-posts">
