@@ -2,9 +2,24 @@
   display: grid;
   grid-template-columns: auto auto;
   align-items: center;
+
 }
 
 .home-posts h2 {
   text-align: center;
+  font-size: 32px;
+  font-family: "Courier New", Courier, monospace;
 }
 
+@media (max-width: 1150px){
+  .home-posts {
+    display: grid;
+    grid-template-columns: auto ;
+    align-items: center;
+  }
+  .home-posts h2 {
+    display: grid;
+    grid-template-columns: auto ;
+    align-items: center;
+  }
+}
