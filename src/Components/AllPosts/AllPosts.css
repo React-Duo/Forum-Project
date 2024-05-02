@@ -62,3 +62,24 @@
   padding-right: 3px;
 }
 
+
+@media (max-width: 600px){
+  .all-posts {
+    width: 400px;
+  }
+  
+  .post {
+    max-width: 350px;
+  }
+}
+
+
+@media (max-width: 430px){
+  .all-posts {
+    width: 350px;
+  }
+  
+  .post {
+    max-width: 330px;
+  }
+}

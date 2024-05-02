@@ -32,7 +32,6 @@ const AllPosts = (props) => {
           <p>01.05.2024</p>
         </div>
       </div>
-      
     </div>
   );
 };
