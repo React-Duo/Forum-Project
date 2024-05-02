@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, push, get, set, update, query, equalTo, orderByChild, orderByKey } from "firebase/database";
+import { getDatabase, ref, push, get, set, update, query, equalTo, orderByChild, orderByKey, goOnline, goOffline } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB5oOxHK0BHyFKt-v8K5MWVyoNRu_UxA7Y",
@@ -19,17 +19,25 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 const getUsers = async () => {
-    const snapshot = await get(ref(database, 'comments/1'));
-    if (snapshot.exists()) {
-        return snapshot.val();
+
+    goOnline(database);
+
+    try {
+        const snapshot = await get(ref(database, 'comments/1'));
+        if (snapshot.exists()) {
+            return snapshot.val();
+        } else {
+            throw new Error('Data not found!');
+        }
+
+    } catch (error) {
+        return error.message;
     }
-    return 'Sorry, data not found.';
 }
 
 const result = await getUsers();
 console.log(result);
-
-
+goOffline(database);
 
 
 
