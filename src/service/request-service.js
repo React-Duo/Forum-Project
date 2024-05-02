@@ -27,10 +27,17 @@ const getUsers = async () => {
 }
 
 const result = await getUsers();
-console.log(result);
+// console.log(result);
 
+export const getPosts = async () => {
+    const snapshot = await get(ref(database, 'posts'));
+    if (snapshot.exists()) {
+        return snapshot.val();
+    }
+    return 'Sorry, data not found.';
+}
 
-
-
+const posts = await getPosts();
+console.log(posts);
 
 
