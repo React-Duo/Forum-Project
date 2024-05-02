@@ -1,5 +1,32 @@
 .Footer{
-    height: 100px;
     background-color: #131212cd;
-    color: white;
+    color: rgba(203, 203, 203, 0.676);
+}
+
+.Footer img{
+    width: 120px;
+}
+
+.Footer{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+.copyrigth{
+    display: flex;
+    align-items: row;
+    gap: 21px;
+    margin-top: 11px;
+}
+
+.servicesFooter{
+    display: flex;
+    align-items: center;
+    gap: 21px;
+    margin-top: 11px;
+    list-style: none;
+}
+
+.servicesFooter li{
+    cursor: pointer;
 }
