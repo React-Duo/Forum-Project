@@ -58,14 +58,31 @@ export const getPosts = async () => {
     const snapshot = await get(ref(database, "posts"));
     if (snapshot.exists()) {
       return snapshot.val();
-    }
+    }else {
+        throw new Error('Data not found!');
+  }
   } catch (error) {
     return error.message;
-  } finally{
-    goOffline(database);
-  }
-  
+  } 
+//   finally{
+//     goOffline(database);
+//   }
 };
 
-const posts = await getPosts();
-console.log(posts);
+
+export const getComments = async () => {
+    goOnline(database);
+    try {
+      const snapshot = await get(ref(database, "comments"));
+      if (snapshot.exists()) {
+        return snapshot.val();
+      }else {
+          throw new Error('Data not found!');
+    }
+    } catch (error) {
+      return error.message;
+    } 
+  //   finally{
+  //     goOffline(database);
+  //   }
+  };
