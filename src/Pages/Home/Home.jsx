@@ -8,11 +8,11 @@ import Footer from "../../Components/Footer/Footer";
 const Home = () => {
   return (
     <div>
-      <NavBarHome />
+      <NavBarHome logged="true" />
       <HomeHeader />
 
       <div className="home-posts">
-        <h2>Top posts</h2> 
+        <h2>Top posts</h2>
         <h2>Recent posts</h2>
         <AllPosts home="true" order="top" />
         <AllPosts home="true" />
