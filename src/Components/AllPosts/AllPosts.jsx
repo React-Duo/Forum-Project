@@ -2,7 +2,7 @@ import React from "react";
 import "./AllPosts.css";
 import { assets } from "../../assets/assets";
 import { getPosts } from "../../service/request-service";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const AllPosts = (props) => {
 
