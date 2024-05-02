@@ -11,7 +11,6 @@ const AllPosts = (props) => {
   useEffect(() => {
     const fetchPosts = async () => {
       let posts = await getPosts();
-      
       if (props.order === "top") {
         posts.sort((a, b) => Object.keys(b.postLikedBy).length - Object.keys(a.postLikedBy).length);      }
 
