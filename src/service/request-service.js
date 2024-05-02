@@ -32,12 +32,13 @@ const getUsers = async () => {
 
     } catch (error) {
         return error.message;
+    } finally {
+        goOffline(database);
     }
 }
 
 const result = await getUsers();
 console.log(result);
-goOffline(database);
 
 
 
