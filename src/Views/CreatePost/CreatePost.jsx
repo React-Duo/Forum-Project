@@ -1,7 +1,13 @@
+import React from 'react'
+import './CreatePost.css'
+import CreatePostForm from '../../Components/CreatePostForm/CreatePostForm'
+
 const CreatePost = () => {
-
-
-
+  return (
+    <>
+        <CreatePostForm />
+    </>
+  )
 }
 
-export default CreatePost;
+export default CreatePost
