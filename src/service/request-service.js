@@ -32,11 +32,11 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
 
-const getUsers = async () => {
+export const getUsers = async () => {
   goOnline(database);
 
   try {
-    const snapshot = await get(ref(database, "comments/1"));
+    const snapshot = await get(ref(database, "users"));
     if (snapshot.exists()) {
       return snapshot.val();
     } else {
@@ -44,13 +44,12 @@ const getUsers = async () => {
     }
   } catch (error) {
     return error.message;
-    } finally {
-        goOffline(database);
-  }
+    } 
+  //   finally {
+  //       goOffline(database);
+  // }
 };
 
-const result = await getUsers();
-// console.log(result);
 
 export const getPosts = async () => {
   goOnline(database);
@@ -64,9 +63,9 @@ export const getPosts = async () => {
   } catch (error) {
     return error.message;
   } 
-//   finally{
-//     goOffline(database);
-//   }
+  // finally{
+  //   goOffline(database);
+  // }
 };
 
 
@@ -82,7 +81,7 @@ export const getComments = async () => {
     } catch (error) {
       return error.message;
     } 
-  //   finally{
-  //     goOffline(database);
-  //   }
+    // finally{
+    //   goOffline(database);
+    // }
   };
