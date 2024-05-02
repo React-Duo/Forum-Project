@@ -1,51 +1,73 @@
 import React from "react";
 import "./AllPosts.css";
 import { assets } from "../../assets/assets";
-import { getPosts } from "../../service/request-service";
+import { getPosts, getComments } from "../../service/request-service";
 import { useEffect, useState } from "react";
 
 const AllPosts = (props) => {
-
   const [posts, setPosts] = useState([]);
- 
+  const [comments, setComments] = useState([]);
+
   useEffect(() => {
     const fetchPosts = async () => {
-      const posts = await getPosts();
+      let posts = await getPosts();
+      
+      if (props.order === "top") {
+        posts.sort((a, b) => Object.keys(b.postLikedBy).length - Object.keys(a.postLikedBy).length);      }
+
       setPosts(posts);
     };
 
     fetchPosts();
+
+    const fetchComments = async () => {
+      const comments = await getComments();
+      setComments(comments);
+    };
+
+    fetchComments();
   }, []);
 
   return (
     <div className="all-posts">
-    {props.home === "true" ? "" : <div className="orderOptions">
-            <a>Top</a>
-            <a>Recent</a>
-    </div>}
-      <div className="post">
-        <div className="personDetails">
-          <img src={assets.profile}></img>
-          <h4>Pesho Kirov</h4>
+      {props.home !== "true" ? (
+        ""
+      ) : (
+        <div className="orderOptions">
+          <a>Top</a>
+          <a>Recent</a>
         </div>
-        <div className="postContent">
-          <h3>Add font in typeform</h3>
-          <p>
-            Hi, I wanted to know if it possible to add a font in the list? Our
-            compagny is currently using the gibson font as the official one so
-            it would be cool to use it in our form.
-          </p>
-        </div>
-        <div className="interactions">
-          <p>
-            <i className="fa-solid fa-thumbs-up fa-lg"></i>3
-          </p>
-          <p>
-            <i className="fa-solid fa-comment fa-lg"></i>4
-          </p>
-          <p>01.05.2024</p>
-        </div>
-      </div>
+      )}
+      {posts.map((post, index) => {
+        return (
+          <div className="post" key={index}>
+            <div className="personDetails">
+              <img src={assets.profile}></img>
+              <h4>{post.postAuthor}</h4>
+            </div>
+            <div className="postContent">
+              <h3>{post.postTitle}</h3>
+              <p>
+                {props.home
+                  ? post.postContent.substring(0, 100) + "..."
+                  : post.postContent}
+              </p>
+            </div>
+            <div className="interactions">
+              <p>
+                <i className="fa-solid fa-thumbs-up fa-lg"></i>
+                {Object.keys(post.postLikedBy).length}
+              </p>
+              <p>
+                <i className="fa-solid fa-comment fa-lg"></i>
+                {comments.filter((comment) => comment.relatedPost === index)
+                  .length}
+              </p>
+              <p>{post.postDate}</p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
