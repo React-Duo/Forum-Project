@@ -6,13 +6,16 @@ const NavBarHome = ({logged}) => {
   return (
     <div className="NavBarHome">
       <div>
-        <img src={assets.logo} alt="Test Image" />
+        <img id="logoImg" src={assets.logo} alt="Test Image" />
       </div>
+      <div className="homeTitle">
       <h1>
-        Welcome to our community<span></span>
+        Welcome to our community
       </h1>
+      <h4>Pesho</h4>
+      </div>
 
-      {!logged ? (
+      {logged ? (
         <div className="login-buttons-home">
           <button id="login-btn">Login</button>
           <button id="register-btn">Register</button>
