@@ -1,8 +1,22 @@
 import React from "react";
 import "./AllPosts.css";
 import { assets } from "../../assets/assets";
+import { getPosts } from "../../service/request-service";
+import React, { useEffect, useState } from "react";
 
 const AllPosts = (props) => {
+
+  const [posts, setPosts] = useState([]);
+ 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await getPosts();
+      setPosts(posts);
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <div className="all-posts">
     {props.home === "true" ? "" : <div className="orderOptions">
