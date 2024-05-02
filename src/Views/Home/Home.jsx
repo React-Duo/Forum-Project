@@ -8,7 +8,6 @@ import Footer from "../../Components/Footer/Footer";
 const Home = () => {
   return (
     <div>
-      <NavBarHome logged="false" />
       <HomeHeader />
 
       <div className="home-posts">
@@ -17,7 +16,6 @@ const Home = () => {
         <AllPosts home="true" order="top" />
         <AllPosts home="true" />
       </div>
-      <Footer />
     </div>
   );
 };

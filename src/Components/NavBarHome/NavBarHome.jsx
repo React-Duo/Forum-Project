@@ -12,7 +12,7 @@ const NavBarHome = ({logged}) => {
         Welcome to our community<span></span>
       </h1>
 
-      {logged === "false" ? (
+      {!logged ? (
         <div className="login-buttons-home">
           <button id="login-btn">Login</button>
           <button id="register-btn">Register</button>
