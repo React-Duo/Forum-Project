@@ -44,7 +44,7 @@ const HomeHeader = () => {
   return (
     <div className="HomeHeader">
       <div className="TopUsers">
-        <h2>Most helpful members</h2>
+        <h2>Top members</h2>
         <div className="TopUsersList">
         {topUsers.map((user, index) => {
           return (

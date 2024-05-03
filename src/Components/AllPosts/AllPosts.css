@@ -8,8 +8,8 @@
   align-items: center;
   width: 550px;
   margin: 0 auto;
-  border: 1px solid #f1f1f1;
-  background-color: #fffefecd;
+  border: none;
+  background-color: rgba(247, 245, 242, 0.632);
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 30px;
