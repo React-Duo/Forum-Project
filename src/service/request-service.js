@@ -7,13 +7,13 @@ export const getUsers = async () => {
   try {
     const snapshot = await get(ref(database, "users"));
     if (snapshot.exists()) {
-      goOffline(database);
+      // goOffline(database);
       return snapshot.val();
     } else {
       throw new Error("Data not found!");
     }
   } catch (error) {
-    goOffline(database);
+    // goOffline(database);
     return error.message;
     } 
 };
