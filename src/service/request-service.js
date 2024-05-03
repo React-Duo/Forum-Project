@@ -52,3 +52,16 @@ export const getComments = async () => {
     //   goOffline(database);
     // }
   };
+
+
+export const checkIfUserExists = async (username) => {
+  goOnline(database);
+  try {
+    const snapshot = await get(ref(database, `users/${username}`));
+    goOffline(database);
+    return snapshot;
+  } catch (error) {
+      goOffline(database);
+      return error.message;
+    } 
+}
