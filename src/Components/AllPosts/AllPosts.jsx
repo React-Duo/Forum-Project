@@ -6,13 +6,19 @@ import { useEffect, useState } from "react";
 
 const AllPosts = (props) => {
   const [posts, setPosts] = useState([]);
+  const [visiblePosts, setVisiblePosts] = useState(5);
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       let posts = await getPosts();
       if (props.order === "top") {
-        posts.sort((a, b) => Object.keys(b.postLikedBy).length - Object.keys(a.postLikedBy).length);      }
+        posts.sort(
+          (a, b) =>
+            Object.keys(b.postLikedBy).length -
+            Object.keys(a.postLikedBy).length
+        );
+      }
 
       setPosts(posts);
     };
@@ -37,7 +43,7 @@ const AllPosts = (props) => {
           <a>Recent</a>
         </div>
       )}
-      {posts.map((post, index) => {
+      {posts.slice(0, visiblePosts).map((post, index) => {
         return (
           <div className="post" key={index}>
             <div className="personDetails">
@@ -59,14 +65,25 @@ const AllPosts = (props) => {
               </p>
               <p>
                 <i className="fa-solid fa-comment fa-lg"></i>
-                {comments.filter((comment) => comment.relatedPost === index)
-                  .length}
+                {
+                  comments.filter((comment) => comment.relatedPost === index)
+                    .length
+                }
               </p>
               <p>{post.postDate}</p>
             </div>
           </div>
         );
       })}
+      <div className="showMore">
+        {props.home !== true
+          ? visiblePosts < posts.length && (
+              <button onClick={() => setVisiblePosts(visiblePosts + 5)}>
+                Show More
+              </button>
+            )
+          : ""}
+      </div>
     </div>
   );
 };
