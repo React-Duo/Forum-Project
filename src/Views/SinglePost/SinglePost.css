@@ -12,33 +12,3 @@
   margin-top: 10px;
 }
 
-.postById {
-  max-width: 1300px;
-  width: auto;
-  min-width: 900px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #f1f1f1;
-  border-radius: 5px;
-  background-color: #f1f1f1;
-  box-shadow: 1px 1px 3px black;
-}
-
-.postById img {
-  width: 40px;
-}
-
-@media (max-width: 920px) {
-  .postById {
-    min-width: 500px;
-  }
-}
-
-@media (max-width: 550px) {
-    .postById {
-      min-width: 0;
-    }
-  }
