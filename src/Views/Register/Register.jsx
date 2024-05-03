@@ -1,13 +1,20 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { checkIfUserExists, createUser } from '../../service/request-service.js';
 import { registerUser } from '../../service/authentication-service.js';
 import './Register.css';
 
 const MIN_CHAR_LENGTH = 4;
 const MAX_CHAR_LENGTH = 32;
+const emailValidationRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 
 const Register = () => {
+
     const [userExists, setUserExists] = useState(false);
+    const [isRegSuccessful, setIsRegSuccessful] = useState(false);
+    const [count, setCount] = useState(5);
+    const navigate = useNavigate();
 
     const getFormData = () => {
         const firstName = document.querySelector('#first-name').value;
@@ -19,9 +26,7 @@ const Register = () => {
         return { firstName, lastName, emailAddress, username, password }
     }
 
-
     const register = async (event) => {
-
         event.preventDefault();
 
         const formData = getFormData();
@@ -36,8 +41,6 @@ const Register = () => {
             return;
         }
 
-        const emailValidationRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
- 
         if (!emailValidationRegex.test(formData.emailAddress)) {
             alert(`${formData.emailAddress} is not a valid email address.`);
             return;
@@ -46,26 +49,45 @@ const Register = () => {
 
 
         const snapshot = await checkIfUserExists(formData.username);
-
         if (snapshot.exists()) {
             setUserExists(true);
             return;
         }
 
-        await registerUser(formData.emailAddress, formData.password);
+        const userCredentials = await registerUser(formData.emailAddress, formData.password);
+        if (typeof userCredentials === 'string' && userCredentials.includes('auth/email-already-in-use')) {
+            alert(`${formData.emailAddress} email address is already in use.`);
+            return;
+        }
 
-        createUser(formData);
-
-        
-
-
+        const creationStatus = await createUser(formData);
+        if (!creationStatus) {
+            setIsRegSuccessful(true);
+        }
     }
 
+    const countDown = () => {
+        if (count === 0) navigate('/');
+        else setTimeout(() => setCount(count - 1), 1000);
+    }
+    
     if (userExists) {
         return (
             <div className="registration-fail">
                 <p>User already exists!</p>
                 <button onClick={() => setUserExists(false)}>Back</button>
+            </div>
+        )
+    }
+
+    if (isRegSuccessful) {
+        return (
+            <div className="registration-success">
+                <p>Welcome onboard!</p> <br />
+                <p>You have registered successfully!</p> <br /> <br />
+                <p>You will be redirected to Home page in {count} seconds...
+                {countDown()}
+                </p>
             </div>
         )
     }
