@@ -1,7 +1,10 @@
-import './Register.css'
+import { useState } from 'react';
+import { checkIfUserExists } from '../../service/request-service.js';
+import { registerUser } from '../../service/authentication-service.js';
+import './Register.css';
 
 const Register = () => {
-
+    const [userExists, setUserExists] = useState(false);
 
     const getFormData = () => {
 
@@ -11,25 +14,36 @@ const Register = () => {
         const username = document.querySelector('#username').value;
         const password = document.querySelector('#password').value;
 
-        return {
-            firstName,
-            lastName,
-            emailAddress,
-            username,
-            password
-        }
+        return { firstName, lastName, emailAddress, username, password }
     }
 
 
-    const register = () => {
-
+    const register = async () => {
         const formData = getFormData();
-
         console.log(formData);
+
+        const snapshot = await checkIfUserExists(formData.username);
+        
+        if (snapshot.exists()) {
+            setUserExists(true);
+            return;
+        }
+
+        registerUser(formData.emailAddress, formData.password);
+
 
         
 
 
+    }
+
+    if (userExists) {
+        return (
+            <div className="registration-fail">
+                <p>User already exists!</p>
+                <button onClick={() => setUserExists(false)}>Back</button>
+            </div>
+        )
     }
 
     return (
