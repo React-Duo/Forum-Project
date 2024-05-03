@@ -67,7 +67,10 @@ export const checkIfUserExists = async (username) => {
 }
 
 export const createUser = async (userDetails) => {
-
-  await set(ref(database, `users/${userDetails.username}`), userDetails);
+  try {
+    return await set(ref(database, `users/${userDetails.username}`), userDetails);
+  } catch (error) {
+    return error.message;
+  }
 }
 
