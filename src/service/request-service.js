@@ -1,4 +1,4 @@
-import database from '../config/firebase-config';
+import database from '../config/firebase-config.js';
 import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey, goOnline, goOffline } from "firebase/database";
 
 export const getUsers = async () => {
@@ -7,18 +7,16 @@ export const getUsers = async () => {
   try {
     const snapshot = await get(ref(database, "users"));
     if (snapshot.exists()) {
+      goOffline(database);
       return snapshot.val();
     } else {
       throw new Error("Data not found!");
     }
   } catch (error) {
+    goOffline(database);
     return error.message;
     } 
-  //   finally {
-  //       goOffline(database);
-  // }
 };
-
 
 export const getPosts = async () => {
   goOnline(database);
