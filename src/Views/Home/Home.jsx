@@ -12,11 +12,11 @@ const Home = () => {
       <div className="home-posts">
         <div>
           <h2>Top posts</h2>
-          <AllPosts home="true" order="top" />
+          <AllPosts home={true} order="top" />
         </div>
         <div>
           <h2>Recent posts</h2>
-          <AllPosts home="true" />
+          <AllPosts home={true} />
         </div>
       </div>
     </div>

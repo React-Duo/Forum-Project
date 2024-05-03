@@ -1,0 +1,14 @@
+.singlePostContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  margin: 0 auto;
+  border: none;
+  background-color: rgba(247, 245, 242, 0.632);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+

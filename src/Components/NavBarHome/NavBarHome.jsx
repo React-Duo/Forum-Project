@@ -15,7 +15,7 @@ const NavBarHome = ({logged}) => {
       <h4>Pesho</h4>
       </div>
 
-      {logged ? (
+      {!logged ? (
         <div className="login-buttons-home">
           <button id="login-btn">Login</button>
           <button id="register-btn">Register</button>

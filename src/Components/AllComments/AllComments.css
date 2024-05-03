@@ -1,0 +1,51 @@
+.allComments {
+  width: 1500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 1px 0px 3px rgb(0, 0, 0);
+  background-color: #f1f1f1;
+}
+
+.comment {
+  padding: 0px 15px;
+}
+
+.allComments img {
+  width: 40px;
+}
+
+.allComments h5 {
+  font-size: 17px;
+  padding-bottom: 15px;
+}
+
+.commentContent {
+  padding: 10px;
+  border-radius: 5px;
+  color: rgba(0, 0, 0, 0.689);
+  background-color: #c4c3c340;
+}
+
+.comment hr {
+  border: 1px solid #8887879f;
+  margin-top: 15px;
+}
+
+@media (max-width: 1300px) {
+  .allComments {
+    width: 900px;
+  }
+}
+@media (max-width: 950px) {
+  .allComments {
+    width: 600px;
+  }
+}
+@media (max-width: 620px) {
+  .allComments {
+    width: 390px;
+  }
+}
