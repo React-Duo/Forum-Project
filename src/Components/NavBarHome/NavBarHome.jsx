@@ -1,8 +1,12 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import "./NavBarHome.css";
 import { assets } from "../../assets/assets";
 
 const NavBarHome = ({logged}) => {
+  
+  const navigate = useNavigate();
+
   return (
     <div className="NavBarHome">
       <div>
@@ -18,7 +22,7 @@ const NavBarHome = ({logged}) => {
       {!logged ? (
         <div className="login-buttons-home">
           <button id="login-btn">Login</button>
-          <button id="register-btn">Register</button>
+          <button id="register-btn" onClick={() => navigate(`/register`)}>Register</button>
         </div>
       ) : (
         <div className="login-buttons-home">
