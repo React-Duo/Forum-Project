@@ -58,10 +58,10 @@ export const checkIfUserExists = async (username) => {
   goOnline(database);
   try {
     const snapshot = await get(ref(database, `users/${username}`));
-    goOffline(database);
+    //goOffline(database);
     return snapshot;
   } catch (error) {
-      goOffline(database);
+      //goOffline(database);
       return error.message;
     } 
 }
