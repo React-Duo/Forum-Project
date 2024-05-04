@@ -28,9 +28,10 @@ const NavBarHome = () => {
         </div>
       ) : (
         <div className="login-buttons-home">
-          <button id="logout-btn">Log out</button>
+          <button id="all-posts" onClick={() => navigate(`/posts`)}>All Posts</button>
           <button id="users-btn">Users</button>
           <img id="profileImg" src={assets.profile}></img>
+          <button id="logout-btn">Log out</button>
         </div>
       )}
     </div>
