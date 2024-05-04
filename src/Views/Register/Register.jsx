@@ -4,14 +4,7 @@ import { checkIfUserExists, createUser } from '../../service/request-service.js'
 import { registerUser } from '../../service/authentication-service.js';
 import AuthContext from '../../Context/AuthContext.jsx';
 import './Register.css';
-
-const MIN_CHAR_LENGTH = 4;
-const MAX_CHAR_LENGTH = 32;
-const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const DIGIT_REGEX = /\d/;
-const LETTER_REGEX = /[a-zA-Z]/;
-const ALPHA_NUMERIC_REGEX = /^[a-zA-Z0-9]+$/;
-const SPECIAL_CHARS_REGEX = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+import { MIN_CHAR_LENGTH, MAX_CHAR_LENGTH, EMAIL_REGEX, DIGIT_REGEX, LETTER_REGEX, ALPHA_NUMERIC_REGEX, SPECIAL_CHARS_REGEX } from '../../common/constants.js';
 
 const Register = () => {
 
