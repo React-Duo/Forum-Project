@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./NavBarHome.css";
 import { assets } from "../../assets/assets";
+import AuthContext from "../../Context/AuthContext";
 
-const NavBarHome = ({logged}) => {
+const NavBarHome = () => {
   
+  const { isLoggedIn, setLoginState } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -19,9 +21,9 @@ const NavBarHome = ({logged}) => {
       <h4>Pesho</h4>
       </div>
 
-      {!logged ? (
+      {!isLoggedIn ? (
         <div className="login-buttons-home">
-          <button id="login-btn">Login</button>
+          <button id="login-btn" onClick={() => navigate(`/login`)}>Login</button>
           <button id="register-btn" onClick={() => navigate(`/register`)}>Register</button>
         </div>
       ) : (
