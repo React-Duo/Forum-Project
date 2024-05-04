@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkIfUserExists, createUser } from '../../service/request-service.js';
 import { registerUser } from '../../service/authentication-service.js';
+import AuthContext from '../../Context/AuthContext.jsx';
 import './Register.css';
 
 const MIN_CHAR_LENGTH = 4;
@@ -18,6 +19,7 @@ const Register = () => {
     const [isRegSuccessful, setIsRegSuccessful] = useState(false);
     const [count, setCount] = useState(5);
     const navigate = useNavigate();
+    const { setLoginState } = useContext(AuthContext);
 
     const getFormData = () => {
         const firstName = document.querySelector('#first-name').value;
@@ -80,7 +82,10 @@ const Register = () => {
     }
 
     const countDown = () => {
-        if (count === 0) navigate('/');
+        if (count === 0) {
+            setLoginState(true);
+            navigate('/');
+        }
         else setTimeout(() => setCount(count - 1), 1000);
     }
     
