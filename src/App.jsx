@@ -22,7 +22,7 @@ function App() {
     <>
       <BrowserRouter>
         <AuthContext.Provider value={{isLoggedIn: authValue, setLoginState: setAuthValue}}>
-        <NavBarHome logged={authValue}/>
+        <NavBarHome />
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/login" element={<Login />}/>
