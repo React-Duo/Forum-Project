@@ -6,8 +6,11 @@ import './Register.css';
 
 const MIN_CHAR_LENGTH = 4;
 const MAX_CHAR_LENGTH = 32;
-const emailValidationRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
+const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const DIGIT_REGEX = /\d/;
+const LETTER_REGEX = /[a-zA-Z]/;
+const ALPHA_NUMERIC_REGEX = /^[a-zA-Z0-9]+$/;
+const SPECIAL_CHARS_REGEX = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
 const Register = () => {
 
@@ -41,12 +44,22 @@ const Register = () => {
             return;
         }
 
-        if (!emailValidationRegex.test(formData.emailAddress)) {
+        if (!EMAIL_REGEX.test(formData.emailAddress)) {
             alert(`${formData.emailAddress} is not a valid email address.`);
             return;
         }
 
+        if (formData.username.length < 8 || !ALPHA_NUMERIC_REGEX.test(formData.username) 
+            || !DIGIT_REGEX.test(formData.username) || !LETTER_REGEX.test(formData.username)) {
+                alert(`${formData.username} is not a valid username.`);
+                return;
+        }
 
+        if (formData.password.length < 8 || !SPECIAL_CHARS_REGEX.test(formData.password) 
+            || !DIGIT_REGEX.test(formData.password) || !LETTER_REGEX.test(formData.password) ) {
+                alert(`${formData.password} is not a valid password.`);
+                return;
+        }
 
         const snapshot = await checkIfUserExists(formData.username);
         if (snapshot.exists()) {
@@ -95,10 +108,14 @@ const Register = () => {
     return (
         <form onSubmit={register} className="register-form">
             <span><label htmlFor="first-name">First Name </label><input type="text" name="first-name" id='first-name' required /></span> <br />
+            <h5><i>/ First name must be between 4 and 32 characters long. /</i></h5> <br />
             <span><label htmlFor="last-name">Last Name </label><input type="text" name="last-name" id='last-name' required /></span> <br />
+            <h5><i>/ Last name must be between 4 and 32 characters long. /</i></h5> <br />
             <span><label htmlFor="email">Email address </label><input type="email" name="email" id='email' required /></span> <br />
-            <span><label htmlFor="username">Username </label><input type="text" name="username" id='username'/></span> <br />
+            <span><label htmlFor="username">Username </label><input type="text" name="username" id='username' required /></span> <br />
+            <h5><i>/ Username requirements - at least: 8 characters, ONE digit, ONE letter, NO special symbols /</i></h5> <br />
             <span><label htmlFor="password">Password </label><input type="password" name="password" id='password' required /></span> <br />
+            <h5><i>/ Password requirements - at least: 8 characters, ONE digit, ONE letter, ONE special symbol /</i></h5> <br />
             <button type="submit">Register</button>
         </form>
     )
