@@ -1,0 +1,9 @@
+.authenticated-hoc {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border: solid 5px black;
+    padding: 5%;
+}
