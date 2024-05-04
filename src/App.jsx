@@ -28,8 +28,8 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/posts" element={<Authenticated><Posts /></Authenticated>}/>
-          <Route path="/posts/:id" element={<SinglePost />}/>
-          <Route path="/create-post" element={<CreatePost />}/>
+          <Route path="/posts/:id" element={<Authenticated><SinglePost /></Authenticated>}/>
+          <Route path="/create-post" element={<Authenticated><CreatePost /></Authenticated>}/>
           <Route path="/users" element={<Authenticated><Users /></Authenticated>}/>
           <Route path="/profile" element={<Authenticated><Profile /></Authenticated>}/>
           <Route path="*" element={<NotFound />}/>
