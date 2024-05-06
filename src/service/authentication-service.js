@@ -11,3 +11,12 @@ export const registerUser = async (emailAddress, password) => {
     }
 }
 
+export const signInUser = async (emailAddress, password) => {
+    try {
+        const authObject = getAuth(app);
+        const userCredentials = await signInWithEmailAndPassword(authObject, emailAddress, password);
+        return userCredentials;
+    } catch (error) {
+        return error.message;
+    }
+}
