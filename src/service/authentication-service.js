@@ -20,3 +20,12 @@ export const signInUser = async (emailAddress, password) => {
         return error.message;
     }
 }
+
+export const signOutUser = async () => {
+    try {
+        const authObject = getAuth(app);
+        await signOut(authObject);
+    } catch (error) {
+        return error.message;
+    }
+}
