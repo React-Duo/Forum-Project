@@ -14,6 +14,7 @@ import Authenticated from './hoc/Authenticated/Authenticated';
 import NotFound from './Views/NotFound/NotFound';
 import NavBarHome from "./Components/NavBarHome/NavBarHome";
 import Footer from "./Components/Footer/Footer";
+import Logout from './Components/Logout/Logout';
 
 function App() {
   const[authValue, setAuthValue] = useState(false);
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/logout" element={<Logout />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/posts" element={<Authenticated><Posts /></Authenticated>}/>
           <Route path="/posts/:id" element={<Authenticated><SinglePost /></Authenticated>}/>
