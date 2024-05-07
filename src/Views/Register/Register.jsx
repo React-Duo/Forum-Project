@@ -61,6 +61,16 @@ const Register = () => {
         }
     }, [form]);
 
+    useEffect(() => {
+        if (isRegSuccessful) {
+            if (count === 0) {
+                setLoginState(true);
+                navigate('/');
+            }
+            else setTimeout(() => setCount(count - 1), 1000);
+        }
+    }, [count, isRegSuccessful]);
+
     const register = (event) => {
         event.preventDefault();        
         const firstName = event.target.firstName.value;
@@ -102,14 +112,6 @@ const Register = () => {
         setIsFormSubmitted(true);
     }
 
-    const countDown = () => {
-        if (count === 0) {
-            setLoginState(true);
-            navigate('/');
-        }
-        else setTimeout(() => setCount(count - 1), 1000);
-    }
-
     if (loading) {
         return (
             <div className='spinner'></div>
@@ -121,9 +123,7 @@ const Register = () => {
             <div className="registration-success">
                 <p>Welcome onboard!</p> <br />
                 <p>You have registered successfully!</p> <br /> <br />
-                <p>You will be redirected to Home page in {count} seconds...
-                {countDown()}
-                </p>
+                <p>You will be redirected to Home page in {count} seconds...</p>
             </div>
         )
     }
