@@ -4,8 +4,7 @@ import { assets } from "../../assets/assets";
 import { getPosts, getComments } from "../../service/request-service";
 import { useEffect, useState } from "react";
 import { set } from "firebase/database";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 const AllPosts = (props) => {
   const [posts, setPosts] = useState([]);
@@ -38,7 +37,7 @@ const AllPosts = (props) => {
   }, [order]);
 
   return (
-    <div className="all-posts">
+    <div className={`all-posts ${props.home ? "isHomeView" : ""}`}>
       {props.home ? (
         ""
       ) : (
@@ -48,23 +47,29 @@ const AllPosts = (props) => {
             <button type="submit">Go</button>
           </div>
           <div className="rightSideOptions">
-          <div><button onClick={() => navigate('/create-post')}>Create</button></div>            <div className="orderOptions">
+            <button onClick={() => navigate("/create-post")}>Create</button>
+            <div className="orderOptions">
               <a onClick={() => setOrder("top")}>Top</a>
               <a onClick={() => setOrder("recent")}>Recent</a>
-            </div>         
+            </div>
           </div>
         </div>
       )}
 
       {posts.slice(0, visiblePosts).map((post, index) => {
         return (
-          <div className="post" key={index}>
+          <div
+            className={`post ${props.home ? "isHomeViewPost" : ""}`}
+            key={index}
+          >
             <div className="personDetails">
               <img src={assets.profile}></img>
               <h4>{post.postAuthor}</h4>
             </div>
             <div className="postContent">
-              <a onClick={() => navigate(`/posts/:${index}`)}>{post.postTitle}</a>
+              <a onClick={() => navigate(`/posts/:${index}`)}>
+                {post.postTitle}
+              </a>
               <p>
                 {props.home
                   ? post.postContent.substring(0, 100) + "..."
