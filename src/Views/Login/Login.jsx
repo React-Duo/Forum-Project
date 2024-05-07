@@ -9,6 +9,8 @@ const Login = () => {
     const { setLoginState } = useContext(AuthContext);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
+    const [count, setCount] = useState(5);
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [form, setForm] = useState({
         emailAddress: '', 
@@ -25,17 +27,26 @@ const Login = () => {
                     if (typeof userCredentials === 'string' && userCredentials.includes('auth/invalid-credential')) {
                        throw new Error(`Incorrect login credentials.`);
                     } 
-                    setLoading(false);
-                    setLoginState(true);
-                    navigate("/");
+                    setIsLoginSuccessful(true);
                 } catch (error) {
-                    setLoading(false);
                     setError(error.message);
+                } finally {
+                    setLoading(false);
                 }
             }
             loginHandler();
         }
     }, [form]);
+
+    useEffect(() => {
+        if (isLoginSuccessful) {
+            if (count === 0) {
+                setLoginState(true);
+                navigate('/');
+            }
+            else setTimeout(() => setCount(count - 1), 1000);
+        }
+    }, [count, isLoginSuccessful]);
 
     const loginUser = (event) => {        
         event.preventDefault();
@@ -52,6 +63,15 @@ const Login = () => {
     if (loading) {
         return (
             <div className='spinner'></div>
+        )
+    }
+
+    if (isLoginSuccessful) {
+        return (
+            <div className="login-success">
+                <p>You have logged in successfully!</p> <br /> <br />
+                <p>You will be redirected to Home page in {count} seconds...</p>
+            </div>
         )
     }
 
