@@ -7,6 +7,7 @@ import './Logout.css';
 const Logout = () => {
     const { setLoginState } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(5);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -14,29 +15,35 @@ const Logout = () => {
         const logoutHandler = async () => {
             try {
                 await signOutUser();
-                setLoading(false);
-                setLoginState(false);
-                navigate('/');
             } catch (error) {
+                console.log(error.message);
+            } finally {
                 setLoading(false);
-                alert(error.message);
             }
         }
         logoutHandler();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (count === 0) {
+            setLoginState(false);
+            navigate('/');
+        }
+        else setTimeout(() => setCount(count - 1), 1000);
+    }, [count]);
 
     if (loading) {
         return (
-            <div className='spinner'></div>
+            <div className="spinner"></div>
         )
     }
 
     return (
-        <div className='centered'>
-            You are logging out.
+        <div className="logout-success">
+            <p>You have logged out successfully.</p> <br />
+            <p>You will be redirected to Home page in {count} seconds...</p>
         </div>
     )
-
 }
 
 export default Logout;
