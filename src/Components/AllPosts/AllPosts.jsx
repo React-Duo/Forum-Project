@@ -64,7 +64,7 @@ const AllPosts = (props) => {
               <h4>{post.postAuthor}</h4>
             </div>
             <div className="postContent">
-              <h3>{post.postTitle}</h3>
+              <a onClick={() => navigate(`/posts/:${index}`)}>{post.postTitle}</a>
               <p>
                 {props.home
                   ? post.postContent.substring(0, 100) + "..."
