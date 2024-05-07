@@ -28,6 +28,10 @@
     transition: transform 0.2s ease; 
 }
 
+.register-form div {
+    color: rgb(212, 12, 12);
+}
+
 .registration-fail {
     display: flex;
     flex-direction: column;
@@ -38,12 +42,15 @@
 }
 
 .registration-success {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 40vh;
-    width: 40vh;
-    margin: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .spinner {
