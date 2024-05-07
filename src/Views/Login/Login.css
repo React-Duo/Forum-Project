@@ -46,6 +46,12 @@
     transition: transform 0.2s ease; 
 }
 
+.login-form div {
+    color: rgb(212, 12, 12);
+    font-weight: bold;
+}
+
+
 .spinner {
     position: fixed;
     top: 50%;

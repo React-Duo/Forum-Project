@@ -7,7 +7,8 @@ import './Register.css';
 import { MIN_CHAR_LENGTH, MAX_CHAR_LENGTH, EMAIL_REGEX, DIGIT_REGEX, LETTER_REGEX, ALPHA_NUMERIC_REGEX, SPECIAL_CHARS_REGEX } from '../../common/constants.js';
 
 const Register = () => {
-    const [userExists, setUserExists] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [isRegSuccessful, setIsRegSuccessful] = useState(false);
     const [count, setCount] = useState(7);
     const [form, setForm] = useState({
@@ -18,7 +19,6 @@ const Register = () => {
         password: ''
     });
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { setLoginState } = useContext(AuthContext);
 
@@ -30,7 +30,7 @@ const Register = () => {
                     const snapshot = await checkIfUserExists(form.username);
                     if (snapshot.exists()) {
                         setLoading(false);
-                        setUserExists(true);
+                        setError(`User already exists.`);
                         return;
                     }
 
@@ -54,7 +54,7 @@ const Register = () => {
 
                 } catch (error) {
                     setLoading(false);
-                    alert(error.message);
+                    setError(error.message);
                 }
             }
             registrationHandler();
@@ -70,33 +70,31 @@ const Register = () => {
         const password = event.target.password.value;
 
         if (firstName.length < MIN_CHAR_LENGTH || firstName.length > MAX_CHAR_LENGTH
-            || !LETTER_REGEX.test(firstName)) {
-            alert(`First name must not contain special characters or digits and must be between ${MIN_CHAR_LENGTH} 
-                    and ${MAX_CHAR_LENGTH} characters long.`); 
+            || DIGIT_REGEX.test(firstName) || SPECIAL_CHARS_REGEX.test(firstName)) {
+            setError(`First name must not contain special characters or digits and must be between ${MIN_CHAR_LENGTH} and ${MAX_CHAR_LENGTH} characters long.`);
             return;
         }
 
         if (lastName.length < MIN_CHAR_LENGTH || lastName.length > MAX_CHAR_LENGTH
-            || !LETTER_REGEX.test(lastName)) {
-            alert(`Last name must not contain special characters or digits and must be between ${MIN_CHAR_LENGTH} 
-                    and ${MAX_CHAR_LENGTH} characters long.`); 
+            || DIGIT_REGEX.test(lastName) || SPECIAL_CHARS_REGEX.test(lastName)) {
+            setError(`Last name must not contain special characters or digits and must be between ${MIN_CHAR_LENGTH} and ${MAX_CHAR_LENGTH} characters long.`); 
             return;
         }
 
         if (!EMAIL_REGEX.test(emailAddress)) {
-            alert(`${emailAddress} is not a valid email address.`);
+            setError(`${emailAddress} is not a valid email address.`);
             return;
         }
 
         if (username.length < 8 || !ALPHA_NUMERIC_REGEX.test(username) 
             || !DIGIT_REGEX.test(username) || !LETTER_REGEX.test(username)) {
-                alert(`${username} is not a valid username.`);
+                setError(`${username} is not a valid username.`);
                 return;
         }
 
         if (password.length < 8 || !SPECIAL_CHARS_REGEX.test(password) 
             || !DIGIT_REGEX.test(password) || !LETTER_REGEX.test(password) ) {
-                alert(`${password} is not a valid password.`);
+                setError(`${password} is not a valid password.`);
                 return;
         }
 
@@ -117,15 +115,6 @@ const Register = () => {
             <div className='spinner'></div>
         )
     }
-    
-    if (userExists) {
-        return (
-            <div className="registration-fail">
-                <p>User already exists!</p>
-                <button onClick={() => setUserExists(false)}>Back</button>
-            </div>
-        )
-    }
 
     if (isRegSuccessful) {
         return (
@@ -140,8 +129,8 @@ const Register = () => {
     }
 
     return (
-        <>
         <form onSubmit={register} className="register-form">
+            {error && <div>{error}</div>} <br />
             <span><label htmlFor="firstName">First Name </label><input type="text" name="firstName" id='firstName' required /></span> <br />
             <h5><i>/ First name must be between 4 and 32 characters long. /</i></h5> <br />
             <span><label htmlFor="lastName">Last Name </label><input type="text" name="lastName" id='lastName' required /></span> <br />
@@ -153,7 +142,6 @@ const Register = () => {
             <h5><i>/ Password requirements - at least: 8 characters, ONE digit, ONE letter, ONE special symbol /</i></h5> <br />
             <button type="submit">Register</button>
         </form>
-        </>
     )
 
 }

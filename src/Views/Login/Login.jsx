@@ -7,6 +7,7 @@ import './Login.css';
 
 const Login = () => {
     const { setLoginState } = useContext(AuthContext);
+    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [form, setForm] = useState({
@@ -29,7 +30,7 @@ const Login = () => {
                     navigate("/");
                 } catch (error) {
                     setLoading(false);
-                    alert(error.message);
+                    setError(error.message);
                 }
             }
             loginHandler();
@@ -41,7 +42,7 @@ const Login = () => {
         const emailAddress = event.target.email.value;
         const password = event.target.password.value;
         if (!EMAIL_REGEX.test(emailAddress)) {
-            alert(`${emailAddress} is not a valid email address.`);
+            setError(`${emailAddress} is not a valid email address.`);
             return;
         }
         setForm({ emailAddress, password });
@@ -56,6 +57,7 @@ const Login = () => {
 
     return (
         <form onSubmit={loginUser} className="login-form">
+            {error && <div>{error}</div>} <br />
             <span><label htmlFor="email">Email address </label>
             <input type="email" name="email" id="email" required /></span> 
             <br />
