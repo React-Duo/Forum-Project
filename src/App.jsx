@@ -27,13 +27,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/login" element={<Login />}/>
-          <Route path="/logout" element={<Logout />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/posts" element={<Authenticated><Posts /></Authenticated>}/>
           <Route path="/posts/:id" element={<Authenticated><SinglePost /></Authenticated>}/>
           <Route path="/create-post" element={<Authenticated><CreatePost /></Authenticated>}/>
           <Route path="/users" element={<Authenticated><Users /></Authenticated>}/>
           <Route path="/profile" element={<Authenticated><Profile /></Authenticated>}/>
+          <Route path="/logout" element={<Logout />}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>
         <Footer />

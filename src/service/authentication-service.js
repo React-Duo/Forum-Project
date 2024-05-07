@@ -26,6 +26,6 @@ export const signOutUser = async () => {
         const authObject = getAuth(app);
         await signOut(authObject);
     } catch (error) {
-        return error.message;
+        console.log(error.message);
     }
 }

@@ -69,13 +69,17 @@ const Register = () => {
         const username = event.target.username.value;
         const password = event.target.password.value;
 
-        if (firstName.length < MIN_CHAR_LENGTH || firstName.length > MAX_CHAR_LENGTH) {
-            alert(`First name must be between ${MIN_CHAR_LENGTH} and ${MAX_CHAR_LENGTH} characters long.`); 
+        if (firstName.length < MIN_CHAR_LENGTH || firstName.length > MAX_CHAR_LENGTH
+            || !LETTER_REGEX.test(firstName)) {
+            alert(`First name must not contain special characters or digits and must be between ${MIN_CHAR_LENGTH} 
+                    and ${MAX_CHAR_LENGTH} characters long.`); 
             return;
         }
 
-        if (lastName.length < MIN_CHAR_LENGTH || lastName.length > MAX_CHAR_LENGTH) {
-            alert(`Last name must be between ${MIN_CHAR_LENGTH} and ${MAX_CHAR_LENGTH} characters long.`); 
+        if (lastName.length < MIN_CHAR_LENGTH || lastName.length > MAX_CHAR_LENGTH
+            || !LETTER_REGEX.test(lastName)) {
+            alert(`Last name must not contain special characters or digits and must be between ${MIN_CHAR_LENGTH} 
+                    and ${MAX_CHAR_LENGTH} characters long.`); 
             return;
         }
 
@@ -136,6 +140,7 @@ const Register = () => {
     }
 
     return (
+        <>
         <form onSubmit={register} className="register-form">
             <span><label htmlFor="firstName">First Name </label><input type="text" name="firstName" id='firstName' required /></span> <br />
             <h5><i>/ First name must be between 4 and 32 characters long. /</i></h5> <br />
@@ -148,6 +153,7 @@ const Register = () => {
             <h5><i>/ Password requirements - at least: 8 characters, ONE digit, ONE letter, ONE special symbol /</i></h5> <br />
             <button type="submit">Register</button>
         </form>
+        </>
     )
 
 }
