@@ -74,3 +74,12 @@ export const createUser = async (userDetails) => {
   }
 }
 
+
+
+export const createPost = async (postDetails) => {
+  try {
+    return await set(ref(database, `posts/${postDetails.Id}`), postDetails);
+  } catch (error) {
+    return error.message;
+  }
+}
