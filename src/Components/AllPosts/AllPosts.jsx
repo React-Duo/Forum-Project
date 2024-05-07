@@ -3,23 +3,27 @@ import "./AllPosts.css";
 import { assets } from "../../assets/assets";
 import { getPosts, getComments } from "../../service/request-service";
 import { useEffect, useState } from "react";
+import { set } from "firebase/database";
+import { useNavigate } from 'react-router-dom';
+
 
 const AllPosts = (props) => {
   const [posts, setPosts] = useState([]);
   const [visiblePosts, setVisiblePosts] = useState(5);
   const [comments, setComments] = useState([]);
+  const [order, setOrder] = useState(props.order);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
       let posts = await getPosts();
-      if (props.order === "top") {
+      if (order === "top") {
         posts.sort(
           (a, b) =>
             Object.keys(b.postLikedBy).length -
             Object.keys(a.postLikedBy).length
         );
       }
-
       setPosts(posts);
     };
 
@@ -31,18 +35,27 @@ const AllPosts = (props) => {
     };
 
     fetchComments();
-  }, []);
+  }, [order]);
 
   return (
     <div className="all-posts">
-      {props.home !== "true" ? (
+      {props.home ? (
         ""
       ) : (
-        <div className="orderOptions">
-          <a>Top</a>
-          <a>Recent</a>
+        <div className="options">
+          <div className="search">
+            <input placeholder="Search..." type="text"></input>
+            <button type="submit">Go</button>
+          </div>
+          <div className="rightSideOptions">
+          <div><button onClick={() => navigate('/create-post')}>Create</button></div>            <div className="orderOptions">
+              <a onClick={() => setOrder("top")}>Top</a>
+              <a onClick={() => setOrder("recent")}>Recent</a>
+            </div>         
+          </div>
         </div>
       )}
+
       {posts.slice(0, visiblePosts).map((post, index) => {
         return (
           <div className="post" key={index}>
@@ -76,7 +89,7 @@ const AllPosts = (props) => {
         );
       })}
       <div className="showMore">
-        {props.home !== true
+        {!props.home
           ? visiblePosts < posts.length && (
               <button onClick={() => setVisiblePosts(visiblePosts + 5)}>
                 Show More
