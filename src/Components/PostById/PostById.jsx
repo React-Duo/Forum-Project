@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./PostById.css";
 import { assets } from "../../assets/assets";
-import { useEffect, useState } from "react";
+import AuthContext from '../../Context/AuthContext';
 
 const PostById = () => {
+
+  const { isLoggedIn, setLoginState } = useContext(AuthContext);
+
+  console.log(isLoggedIn);
+
 
   return (
     <div>
