@@ -22,6 +22,9 @@ export const getPosts = async () => {
   goOnline(database);
   try {
     const snapshot = await get(ref(database, "posts"));
+
+    console.log(snapshot);
+    
     if (snapshot.exists()) {
       return snapshot.val();
     }else {
@@ -74,6 +77,19 @@ export const createUser = async (userDetails) => {
   }
 }
 
+export const getPostById = async (postId) => {
+  try {
+    const snapshot = await get(ref(database, `posts/${postId}`));
+    if (snapshot.exists()) {
+      // goOffline(database);
+      return snapshot.val();
+    } else {
+      throw new Error("Data not found!");
+    }
+  } catch (error) {
+    return error.message;
+  }
+}
 
 
 export const createPost = async (postDetails) => {
