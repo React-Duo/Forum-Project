@@ -38,11 +38,11 @@ const CreatePostForm = () => {
     e.preventDefault();
     try {
       const post = await createPost({
-        Id: posts.length + 1,
+        Id: posts.length ,
         postTitle: e.target.title.value,
         postContent: e.target.description.value,
         date: new Date().toLocaleDateString(),
-        postLikedBy: {[user]:true},
+        postLikedBy: {},
         postAuthor: user,
       });
     } catch (error) {

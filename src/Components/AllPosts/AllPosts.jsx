@@ -26,6 +26,7 @@ const AllPosts = (props) => {
     const fetchPosts = async () => {
       let posts = await getPosts();
       if (order === "top") {
+        posts = posts.filter((post) => post.postLikedBy);
         posts.sort(
           (a, b) =>
             Object.keys(b.postLikedBy).length -
@@ -84,16 +85,16 @@ const AllPosts = (props) => {
             >
               <div className="personDetails">
                 <img src={assets.profile}></img>
-                <h4>{post.postAuthor}</h4>
+                <h4>{post?.postAuthor}</h4>
               </div>
               <div className="postContent">
                 <a onClick={() => navigate(`/posts/${index}`)}>
-                  {post.postTitle}
+                  {post?.postTitle}
                 </a>
                 <p>
                   {props.home
-                    ? post.postContent.substring(0, 100) + "..."
-                    : post.postContent}
+                    ? post?.postContent?.substring(0, 100) + "..."
+                    : post?.postContent}
                 </p>
               </div>
               <div className="interactions">
@@ -102,29 +103,47 @@ const AllPosts = (props) => {
                     id="likeButton"
                     onClick={() => {
                       if (isLoggedIn.status) {
-                        if (post.postLikedBy[user]) {
-                          unlikePost(index, user);
-                          setPosts((prevPosts) => {
-                            const updatedPosts = [...prevPosts];
-                            delete updatedPosts[index].postLikedBy[user];
-                            return updatedPosts;
-                          });
-                          return;
+                        if (post?.postLikedBy) {
+                          if (post?.postLikedBy[user]) {
+                            unlikePost(index, user);
+                            setPosts((prevPosts) => {
+                              const updatedPosts = [...prevPosts];
+                              delete updatedPosts[index]?.postLikedBy[user];
+                              return updatedPosts;
+                            });
+                            return;
+                          } else {
+                            likePost(index, user);
+                            setPosts((prevPosts) => {
+                              const updatedPosts = [...prevPosts];
+                              if (!updatedPosts[index]?.postLikedBy) {
+                                updatedPosts[index].postLikedBy = {};
+                              }
+                              updatedPosts[index].postLikedBy[user] = true;
+                              return updatedPosts;
+                            });
+                          }
                         } else {
-                          likePost(index, user);
                           setPosts((prevPosts) => {
                             const updatedPosts = [...prevPosts];
-                            updatedPosts[index].postLikedBy[user] = true;
+                            updatedPosts[index].postLikedBy = { [user]: true };
                             return updatedPosts;
                           });
+                          likePost(index, user);
                         }
-                      } else{navigate('/login')}
+                      } else {
+                        navigate("/login");
+                      }
                     }}
                     className={`fa-solid fa-thumbs-up fa-lg ${
-                      post.postLikedBy[user] ? "liked" : ""
+                      post?.postLikedBy && post?.postLikedBy[user]
+                        ? "liked"
+                        : ""
                     }`}
                   ></i>
-                  {Object.keys(post.postLikedBy).length}
+                  {post?.postLikedBy
+                    ? Object.keys(post?.postLikedBy).length
+                    : 0}
                 </p>
                 <p>
                   <i
@@ -136,7 +155,7 @@ const AllPosts = (props) => {
                       .length
                   }
                 </p>
-                <p>{post.date}</p>
+                <p>{post?.date}</p>
               </div>
             </div>
           );
