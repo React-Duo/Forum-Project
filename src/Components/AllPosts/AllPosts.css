@@ -4,7 +4,6 @@
 
 .all-posts {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
@@ -28,7 +27,6 @@
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 30px;
-  margin-top: 30px;
 }
 
 .post {
@@ -57,6 +55,29 @@
   border-radius: 5px;
   background-color: #f1f1f1;
   box-shadow: 1px 1px 3px black;
+}
+
+.postsContainer{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 15px;
+
+  margin-top: 30px;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 30px;
+}
+
+.rightSideOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
 }
 
 .personDetails {
@@ -97,6 +118,7 @@
 
 .fa-solid {
   padding-right: 3px;
+  cursor: pointer;
 }
 
 .showMore button {
@@ -129,17 +151,6 @@
   transform: translateY(-0.1em);
 }
 
-.options {
-  display: flex;
-  gap: 400px;
-}
-.rightSideOptions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 25px;
-}
-
 /* // */
 
 /* plus sign */
@@ -166,7 +177,7 @@
   transform: translate(0em, 0.2em);
 }
 
-/* // */
+
 .search {
   /* display: inline-block; */
   position: relative;
@@ -200,8 +211,13 @@
   background-color: blue;
 }
 
+#likeButton:hover{
+  color: rgb(244, 59, 93);
+}
 
-
+.liked{
+  color: rgb(244, 59, 93);
+}
 @media (max-width: 600px) {
   .all-posts {
     width: 400px;
@@ -213,15 +229,18 @@
   .options {
     gap: 10px;
   }
-  .rightSideOptions{
+  .rightSideOptions {
     flex-direction: column;
     gap: 5px;
   }
+  .search input[type="text"] {
+    width: 230px;
+  }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 485px) {
   .all-posts {
-    width: 350px;
+    width: 370px;
   }
 
   .post {
