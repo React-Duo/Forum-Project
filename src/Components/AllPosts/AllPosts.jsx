@@ -100,7 +100,6 @@ const AllPosts = (props) => {
                 <p>
                   <i
                     id="likeButton"
-                    //TODO: IF the user is not logged in cant like the post
                     onClick={() => {
                       if (isLoggedIn.status) {
                         if (post.postLikedBy[user]) {
