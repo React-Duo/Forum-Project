@@ -1,7 +1,12 @@
 import React from "react";
 import "./AllPosts.css";
 import { assets } from "../../assets/assets";
-import { getPosts, getComments, likePost } from "../../service/request-service";
+import {
+  getPosts,
+  getComments,
+  likePost,
+  unlikePost,
+} from "../../service/request-service";
 import { useEffect, useState } from "react";
 import { set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
@@ -55,69 +60,81 @@ const AllPosts = (props) => {
           </div>
         </div>
       )}
-    
-    <div className={`all-posts ${props.home ? "isHomeView" : ""}`}>
-      
 
-      {posts.slice(0, visiblePosts).map((post, index) => {
-        return (
-          <div
-            className={`post ${props.home ? "isHomeViewPost" : ""}`}
-            key={index}
-          >
-            <div className="personDetails">
-              <img src={assets.profile}></img>
-              <h4>{post.postAuthor}</h4>
+      <div className={`all-posts ${props.home ? "isHomeView" : ""}`}>
+        {posts.slice(0, visiblePosts).map((post, index) => {
+          return (
+            <div
+              className={`post ${props.home ? "isHomeViewPost" : ""}`}
+              key={index}
+            >
+              <div className="personDetails">
+                <img src={assets.profile}></img>
+                <h4>{post.postAuthor}</h4>
+              </div>
+              <div className="postContent">
+                <a onClick={() => navigate(`/posts/${index}`)}>
+                  {post.postTitle}
+                </a>
+                <p>
+                  {props.home
+                    ? post.postContent.substring(0, 100) + "..."
+                    : post.postContent}
+                </p>
+              </div>
+              <div className="interactions">
+                <p>
+                  <i
+                    id="likeButton"
+                    //TODO: Add username and remove hardcoded koko4
+                    //TODO: IF the user is not logged in cant like the post
+                    onClick={() => {
+                      if (post.postLikedBy["koko4"]) {
+                        unlikePost(index, "koko4");
+                        setPosts((prevPosts) => {
+                          const updatedPosts = [...prevPosts];
+                          delete updatedPosts[index].postLikedBy["koko4"];
+                          return updatedPosts;
+                        });
+                        return;
+                      } else {
+                        likePost(index, "koko4");
+                        setPosts((prevPosts) => {
+                          const updatedPosts = [...prevPosts];
+                          updatedPosts[index].postLikedBy["koko4"] = true;
+                          return updatedPosts;
+                        });
+                      }
+                    }}
+                    className={`fa-solid fa-thumbs-up fa-lg ${post.postLikedBy["koko4"] ? "liked" : ""}`}
+                  ></i>
+                  {Object.keys(post.postLikedBy).length}
+                </p>
+                <p>
+                  <i
+                    onClick={() => navigate(`/posts/${index}`)}
+                    className="fa-solid fa-comment fa-lg"
+                  ></i>
+                  {
+                    comments.filter((comment) => comment.relatedPost === index)
+                      .length
+                  }
+                </p>
+                <p>{post.date}</p>
+              </div>
             </div>
-            <div className="postContent">
-              <a onClick={() => navigate(`/posts/${index}`)}>
-                {post.postTitle}
-              </a>
-              <p>
-                {props.home
-                  ? post.postContent.substring(0, 100) + "..."
-                  : post.postContent}
-              </p>
-            </div>
-            <div className="interactions">
-              <p>
-                <i
-                  //TODO: Add username and remove hardcoded koko4
-                  //TODO: IF the user is not logged in cant like the post
-                  onClick={() => {
-                    likePost(index, "koko4");
-                    setPosts((prevPosts) => {
-                      const updatedPosts = [...prevPosts];
-                      updatedPosts[index].postLikedBy["koko4"] = true;
-                      return updatedPosts;
-                    });
-                  }}
-                  className="fa-solid fa-thumbs-up fa-lg"
-                ></i>
-                {Object.keys(post.postLikedBy).length}
-              </p>
-              <p>
-                <i  onClick={() => navigate(`/posts/${index}`)} className="fa-solid fa-comment fa-lg"></i>
-                {
-                  comments.filter((comment) => comment.relatedPost === index)
-                    .length
-                }
-              </p>
-              <p>{post.date}</p>
-            </div>
-          </div>
-        );
-      })}
-      <div className="showMore">
-        {!props.home
-          ? visiblePosts < posts.length && (
-              <button onClick={() => setVisiblePosts(visiblePosts + 5)}>
-                Show More
-              </button>
-            )
-          : ""}
+          );
+        })}
+        <div className="showMore">
+          {!props.home
+            ? visiblePosts < posts.length && (
+                <button onClick={() => setVisiblePosts(visiblePosts + 5)}>
+                  Show More
+                </button>
+              )
+            : ""}
+        </div>
       </div>
-    </div>
     </div>
   );
 };
