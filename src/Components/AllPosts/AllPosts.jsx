@@ -7,9 +7,10 @@ import {
   likePost,
   unlikePost,
 } from "../../service/request-service";
-import { useEffect, useState } from "react";
-import { set } from "firebase/database";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from '../../Context/AuthContext.jsx'; 
+
 
 const AllPosts = (props) => {
   const [posts, setPosts] = useState([]);
@@ -17,6 +18,10 @@ const AllPosts = (props) => {
   const [comments, setComments] = useState([]);
   const [order, setOrder] = useState(props.order);
   const navigate = useNavigate();
+
+  const user = useContext(AuthContext);
+  console.log(user.isLoggedIn); 
+
 
   useEffect(() => {
     const fetchPosts = async () => {
