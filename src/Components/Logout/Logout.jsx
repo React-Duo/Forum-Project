@@ -26,7 +26,7 @@ const Logout = () => {
 
     useEffect(() => {
         if (count === 0) {
-            setLoginState(false);
+            setLoginState({status: false, user: ''});
             navigate('/');
         }
         else setTimeout(() => setCount(count - 1), 1000);
