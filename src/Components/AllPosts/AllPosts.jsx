@@ -32,6 +32,8 @@ const AllPosts = (props) => {
             Object.keys(b.postLikedBy).length -
             Object.keys(a.postLikedBy).length
         );
+      } else{
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
       }
       setPosts(posts);
     };
