@@ -21,7 +21,7 @@ const NavBarHome = () => {
       <h4></h4>
       </div>
 
-      {!isLoggedIn ? (
+      {!isLoggedIn.status ? (
         <div className="login-buttons-home">
           <button id="login-btn" onClick={() => navigate(`/login`)}>Login</button>
           <button id="register-btn" onClick={() => navigate(`/register`)}>Register</button>
