@@ -37,7 +37,7 @@ const AllPosts = (props) => {
   }, [order]);
 
   return (
-    <div className={`all-posts ${props.home ? "isHomeView" : ""}`}>
+    <div className="postsContainer">
       {props.home ? (
         ""
       ) : (
@@ -55,6 +55,9 @@ const AllPosts = (props) => {
           </div>
         </div>
       )}
+    
+    <div className={`all-posts ${props.home ? "isHomeView" : ""}`}>
+      
 
       {posts.slice(0, visiblePosts).map((post, index) => {
         return (
@@ -102,6 +105,7 @@ const AllPosts = (props) => {
             )
           : ""}
       </div>
+    </div>
     </div>
   );
 };

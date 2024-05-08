@@ -4,7 +4,6 @@
 
 .all-posts {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
@@ -57,6 +56,29 @@
   border-radius: 5px;
   background-color: #f1f1f1;
   box-shadow: 1px 1px 3px black;
+}
+
+.postsContainer{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 15px;
+
+  margin-top: 30px;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 30px;
+}
+
+.rightSideOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
 }
 
 .personDetails {
@@ -129,17 +151,6 @@
   transform: translateY(-0.1em);
 }
 
-.options {
-  display: flex;
-  gap: 400px;
-}
-.rightSideOptions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 25px;
-}
-
 /* // */
 
 /* plus sign */
@@ -200,8 +211,6 @@
   background-color: blue;
 }
 
-
-
 @media (max-width: 600px) {
   .all-posts {
     width: 400px;
@@ -213,15 +222,18 @@
   .options {
     gap: 10px;
   }
-  .rightSideOptions{
+  .rightSideOptions {
     flex-direction: column;
     gap: 5px;
   }
+  .search input[type="text"] {
+    width: 230px;
+  }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 485px) {
   .all-posts {
-    width: 350px;
+    width: 370px;
   }
 
   .post {
