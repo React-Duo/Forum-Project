@@ -8,7 +8,7 @@ const Authenticated = ({ children }) => {
 
     return (
         <div>
-            {isLoggedIn ? children : (
+            {isLoggedIn.status ? children : (
                 <div className='authenticated-hoc'>
                     <h2>You need to be logged in to access this content.</h2>
                 </div>
