@@ -22,7 +22,6 @@ const AllPosts = (props) => {
   const navigate = useNavigate();
 
   const {isLoggedIn, setLoginState} = useContext(AuthContext);
-  console.log(isLoggedIn);
   
 
   
@@ -49,10 +48,8 @@ const AllPosts = (props) => {
     const fetchUsers = async () => {
       let users = await getUsers();
       users = Object.entries(users);
-      console.log(users);
       const currentUsername = users.filter((user) => user[1].emailAddress === isLoggedIn.user)[0][0];
       setUser(currentUsername);
-      
     }
     fetchUsers();
 
