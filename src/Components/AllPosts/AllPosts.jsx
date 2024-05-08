@@ -1,7 +1,7 @@
 import React from "react";
 import "./AllPosts.css";
 import { assets } from "../../assets/assets";
-import { getPosts, getComments } from "../../service/request-service";
+import { getPosts, getComments, likePost } from "../../service/request-service";
 import { useEffect, useState } from "react";
 import { set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
@@ -81,17 +81,29 @@ const AllPosts = (props) => {
             </div>
             <div className="interactions">
               <p>
-                <i className="fa-solid fa-thumbs-up fa-lg"></i>
+                <i
+                  //TODO: Add username and remove hardcoded koko4
+                  //TODO: IF the user is not logged in cant like the post
+                  onClick={() => {
+                    likePost(index, "koko4");
+                    setPosts((prevPosts) => {
+                      const updatedPosts = [...prevPosts];
+                      updatedPosts[index].postLikedBy["koko4"] = true;
+                      return updatedPosts;
+                    });
+                  }}
+                  className="fa-solid fa-thumbs-up fa-lg"
+                ></i>
                 {Object.keys(post.postLikedBy).length}
               </p>
               <p>
-                <i className="fa-solid fa-comment fa-lg"></i>
+                <i  onClick={() => navigate(`/posts/${index}`)} className="fa-solid fa-comment fa-lg"></i>
                 {
                   comments.filter((comment) => comment.relatedPost === index)
                     .length
                 }
               </p>
-              <p>{post.postDate}</p>
+              <p>{post.date}</p>
             </div>
           </div>
         );

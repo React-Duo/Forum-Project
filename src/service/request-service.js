@@ -83,3 +83,12 @@ export const createPost = async (postDetails) => {
     return error.message;
   }
 }
+
+
+export const likePost = async (postId, user) => {
+  try {
+    return await set(ref(database, `posts/${postId}/postLikedBy/${user}`), true);
+  } catch (error) {
+    return error.message;
+  }
+};
