@@ -1,6 +1,7 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import "./CreatePostForm.css";
-import { createPost, getPosts } from "../../service/request-service";
+import { createPost, getPosts, getUsers, } from "../../service/request-service";
+import AuthContext from '../../Context/AuthContext.jsx';
 
 const CreatePostForm = () => {
   const [posts, setPosts] = useState([]);
@@ -8,13 +9,28 @@ const CreatePostForm = () => {
     title: '',
     description: ''
   })
+  const [user, setUser] = useState();
+  const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
+  
   useEffect(() => {
     const fetchPosts = async () => {
       let posts = await getPosts();
       setPosts(posts);
     };
     fetchPosts();
+
+    const fetchUsers = async () => {
+      let users = await getUsers();
+      users = Object.entries(users);
+      if (isLoggedIn.status) {
+        const currentUsername = users.filter(
+          (user) => user[1].emailAddress === isLoggedIn.user
+        )[0][0];
+        setUser(currentUsername);
+      }
+    };
+    fetchUsers();
   }, []);
 
 
@@ -22,11 +38,12 @@ const CreatePostForm = () => {
     e.preventDefault();
     try {
       const post = await createPost({
-        Id: posts.length + 1,
+        Id: posts.length ,
         postTitle: e.target.title.value,
         postContent: e.target.description.value,
         date: new Date().toLocaleDateString(),
-        postLikedBy: [],
+        postLikedBy: {},
+        postAuthor: user,
       });
     } catch (error) {
     }
