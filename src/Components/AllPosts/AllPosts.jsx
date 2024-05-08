@@ -6,12 +6,11 @@ import {
   getComments,
   likePost,
   unlikePost,
-  getUsers
+  getUsers,
 } from "../../service/request-service";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from '../../Context/AuthContext.jsx'; 
-
+import AuthContext from "../../Context/AuthContext.jsx";
 
 const AllPosts = (props) => {
   const [posts, setPosts] = useState([]);
@@ -21,10 +20,8 @@ const AllPosts = (props) => {
   const [user, setUser] = useState();
   const navigate = useNavigate();
 
-  const {isLoggedIn, setLoginState} = useContext(AuthContext);
-  
+  const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
-  
   useEffect(() => {
     const fetchPosts = async () => {
       let posts = await getPosts();
@@ -48,11 +45,14 @@ const AllPosts = (props) => {
     const fetchUsers = async () => {
       let users = await getUsers();
       users = Object.entries(users);
-      const currentUsername = users.filter((user) => user[1].emailAddress === isLoggedIn.user)[0][0];
-      setUser(currentUsername);
-    }
+      if (isLoggedIn.status) {
+        const currentUsername = users.filter(
+          (user) => user[1].emailAddress === isLoggedIn.user
+        )[0][0];
+        setUser(currentUsername);
+      }
+    };
     fetchUsers();
-
   }, [order]);
 
   return (
@@ -100,27 +100,30 @@ const AllPosts = (props) => {
                 <p>
                   <i
                     id="likeButton"
-                    //TODO: Add username and remove hardcoded koko4
                     //TODO: IF the user is not logged in cant like the post
                     onClick={() => {
-                      if (post.postLikedBy[user]) {
-                        unlikePost(index, user);
-                        setPosts((prevPosts) => {
-                          const updatedPosts = [...prevPosts];
-                          delete updatedPosts[index].postLikedBy[user];
-                          return updatedPosts;
-                        });
-                        return;
-                      } else {
-                        likePost(index, user);
-                        setPosts((prevPosts) => {
-                          const updatedPosts = [...prevPosts];
-                          updatedPosts[index].postLikedBy[user] = true;
-                          return updatedPosts;
-                        });
-                      }
+                      if (isLoggedIn.status) {
+                        if (post.postLikedBy[user]) {
+                          unlikePost(index, user);
+                          setPosts((prevPosts) => {
+                            const updatedPosts = [...prevPosts];
+                            delete updatedPosts[index].postLikedBy[user];
+                            return updatedPosts;
+                          });
+                          return;
+                        } else {
+                          likePost(index, user);
+                          setPosts((prevPosts) => {
+                            const updatedPosts = [...prevPosts];
+                            updatedPosts[index].postLikedBy[user] = true;
+                            return updatedPosts;
+                          });
+                        }
+                      } else{navigate('/login')}
                     }}
-                    className={`fa-solid fa-thumbs-up fa-lg ${post.postLikedBy[user] ? "liked" : ""}`}
+                    className={`fa-solid fa-thumbs-up fa-lg ${
+                      post.postLikedBy[user] ? "liked" : ""
+                    }`}
                   ></i>
                   {Object.keys(post.postLikedBy).length}
                 </p>
