@@ -6,6 +6,7 @@ import {
   getComments,
   likePost,
   unlikePost,
+  getUsers
 } from "../../service/request-service";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,12 +18,14 @@ const AllPosts = (props) => {
   const [visiblePosts, setVisiblePosts] = useState(5);
   const [comments, setComments] = useState([]);
   const [order, setOrder] = useState(props.order);
+  const [user, setUser] = useState();
   const navigate = useNavigate();
 
-  const user = useContext(AuthContext);
-  console.log(user.isLoggedIn); 
+  const {isLoggedIn, setLoginState} = useContext(AuthContext);
+  console.log(isLoggedIn);
+  
 
-
+  
   useEffect(() => {
     const fetchPosts = async () => {
       let posts = await getPosts();
@@ -35,15 +38,24 @@ const AllPosts = (props) => {
       }
       setPosts(posts);
     };
-
     fetchPosts();
 
     const fetchComments = async () => {
       const comments = await getComments();
       setComments(comments);
     };
-
     fetchComments();
+
+    const fetchUsers = async () => {
+      let users = await getUsers();
+      users = Object.entries(users);
+      console.log(users);
+      const currentUsername = users.filter((user) => user[1].emailAddress === isLoggedIn.user)[0][0];
+      setUser(currentUsername);
+      
+    }
+    fetchUsers();
+
   }, [order]);
 
   return (
@@ -94,24 +106,24 @@ const AllPosts = (props) => {
                     //TODO: Add username and remove hardcoded koko4
                     //TODO: IF the user is not logged in cant like the post
                     onClick={() => {
-                      if (post.postLikedBy["koko4"]) {
-                        unlikePost(index, "koko4");
+                      if (post.postLikedBy[user]) {
+                        unlikePost(index, user);
                         setPosts((prevPosts) => {
                           const updatedPosts = [...prevPosts];
-                          delete updatedPosts[index].postLikedBy["koko4"];
+                          delete updatedPosts[index].postLikedBy[user];
                           return updatedPosts;
                         });
                         return;
                       } else {
-                        likePost(index, "koko4");
+                        likePost(index, user);
                         setPosts((prevPosts) => {
                           const updatedPosts = [...prevPosts];
-                          updatedPosts[index].postLikedBy["koko4"] = true;
+                          updatedPosts[index].postLikedBy[user] = true;
                           return updatedPosts;
                         });
                       }
                     }}
-                    className={`fa-solid fa-thumbs-up fa-lg ${post.postLikedBy["koko4"] ? "liked" : ""}`}
+                    className={`fa-solid fa-thumbs-up fa-lg ${post.postLikedBy[user] ? "liked" : ""}`}
                   ></i>
                   {Object.keys(post.postLikedBy).length}
                 </p>
