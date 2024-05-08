@@ -41,7 +41,7 @@ const Login = () => {
     useEffect(() => {
         if (isLoginSuccessful) {
             if (count === 0) {
-                setLoginState({status: true, user: form.username});
+                setLoginState({status: true, user: form.emailAddress});
                 navigate('/');
             }
             else setTimeout(() => setCount(count - 1), 1000);
