@@ -17,7 +17,10 @@ import Footer from "./Components/Footer/Footer";
 import Logout from './Components/Logout/Logout';
 
 function App() {
-  const[authValue, setAuthValue] = useState(false);
+  const[authValue, setAuthValue] = useState({
+    status: false,
+    user: ''
+  });
 
   return (
     <>
