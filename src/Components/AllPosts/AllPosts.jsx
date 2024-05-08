@@ -67,7 +67,7 @@ const AllPosts = (props) => {
               <h4>{post.postAuthor}</h4>
             </div>
             <div className="postContent">
-              <a onClick={() => navigate(`/posts/:${index}`)}>
+              <a onClick={() => navigate(`/posts/${index}`)}>
                 {post.postTitle}
               </a>
               <p>
