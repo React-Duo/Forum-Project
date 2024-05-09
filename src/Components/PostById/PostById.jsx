@@ -1,47 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import AuthContext from '../../Context/AuthContext';
-import { getPostById } from '../../service/request-service.js';
+import { getPostById, getCommentsByPost } from '../../service/request-service.js';
 import { assets } from "../../assets/assets";
 import "./PostById.css";
 
 const PostById = () => {
-  const { isLoggedIn, setLoginState } = useContext(AuthContext);
   const params = useParams();
+  const postId = params.id;
   const [post, setPost] = useState(null);
-  const [likes, setLikes] = useState([]);
-
-  console.log(isLoggedIn);
+  const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
   useEffect(() => {
     const getSinglePost = async () => {
-      const singlePost = await getPostById(params.id);
-      setPost(singlePost);
+      const singlePost = await getPostById(postId);
+      const { postAuthor, postTitle, postContent, date } = singlePost;
+      const likes = Object.entries(singlePost.postLikedBy).map(entry => entry[0]);
+      let comments = await getCommentsByPost(+postId);
+      comments = Object.values(comments).filter(comment => comment);
+      setPost({postAuthor, postTitle, postContent, date, likes, comments});
     }
     getSinglePost();
   }, []);
 
-  useEffect(() => {
-    if (post) {
-      console.log(post);
-      const likes = Object.keys(post.postLikedBy);
-      console.log(likes);
-      setLikes(likes);
-    }
-  }, [post]);
 
-  
+
   const viewLikes = (event) => {
     event.preventDefault();
-
-    console.log(likes);
-
-    alert(likes);
-
-    
-
-
-
   }
 
   return (
@@ -59,11 +44,11 @@ const PostById = () => {
         <div className="interactions">
           <p>
             <i className="fa-solid fa-thumbs-up fa-lg"></i>
-            {likes.length && <a href="" onClick={viewLikes}>{likes.length}</a>}
+           {post.likes.length}
           </p>
           <p>
             <i className="fa-solid fa-comment fa-lg"></i>
-            3
+            {post.comments.length}
           </p>
           <p>{post.date}</p>
         </div>
