@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import AuthContext from '../../Context/AuthContext';
 import { getPostById, getCommentsByPost } from '../../service/request-service.js';
+import AllComments from '../AllComments/AllComments.jsx';
 import { assets } from "../../assets/assets";
 import "./PostById.css";
 
@@ -53,6 +54,7 @@ const PostById = () => {
           <p>{post.date}</p>
         </div>
       </div>
+      <AllComments comments={post.comments} />
     </div>
   );
 };
