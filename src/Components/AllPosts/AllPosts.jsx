@@ -26,14 +26,14 @@ const AllPosts = (props) => {
     const fetchPosts = async () => {
       let posts = await getPosts();
       if (order === "top") {
-        posts = posts.filter((post) => post.postLikedBy);
+        posts = posts.filter((post) => post[1].postLikedBy);
         posts.sort(
           (a, b) =>
-            Object.keys(b.postLikedBy).length -
-            Object.keys(a.postLikedBy).length
+            Object.keys(b[1].postLikedBy).length -
+            Object.keys(a[1].postLikedBy).length
         );
-      } else{
-        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } else {
+        posts.sort((a, b) => new Date(b[1].date) - new Date(a[1].date));
       }
       setPosts(posts);
     };
@@ -83,20 +83,20 @@ const AllPosts = (props) => {
           return (
             <div
               className={`post ${props.home ? "isHomeViewPost" : ""}`}
-              key={index}
+              key={post[0]}
             >
               <div className="personDetails">
                 <img src={assets.profile}></img>
-                <h4>{post?.postAuthor}</h4>
+                <h4>{post[1]?.postAuthor}</h4>
               </div>
               <div className="postContent">
-                <a onClick={() => navigate(`/posts/${index}`)}>
-                  {post?.postTitle}
+                <a onClick={() => navigate(`/posts/${post[0]}`)}>
+                  {post[1]?.postTitle}
                 </a>
                 <p>
                   {props.home
-                    ? post?.postContent?.substring(0, 100) + "..."
-                    : post?.postContent}
+                    ? post[1]?.postContent?.substring(0, 100) + "..."
+                    : post[1]?.postContent}
                 </p>
               </div>
               <div className="interactions">
@@ -105,46 +105,49 @@ const AllPosts = (props) => {
                     id="likeButton"
                     onClick={() => {
                       if (isLoggedIn.status) {
-                        if (post?.postLikedBy) {
-                          if (post?.postLikedBy[user]) {
-                            unlikePost(index, user);
+                        if (post[1]?.postLikedBy) {
+                          if (post[1]?.postLikedBy[user]) {
+                            unlikePost(post[0], user);
                             setPosts((prevPosts) => {
                               const updatedPosts = [...prevPosts];
-                              delete updatedPosts[index]?.postLikedBy[user];
+                              delete updatedPosts[index][1]?.postLikedBy?.[
+                                user
+                              ];
                               return updatedPosts;
                             });
-                            return;
                           } else {
-                            likePost(index, user);
+                            likePost(post[0], user);
                             setPosts((prevPosts) => {
                               const updatedPosts = [...prevPosts];
-                              if (!updatedPosts[index]?.postLikedBy) {
-                                updatedPosts[index].postLikedBy = {};
+                              if (!updatedPosts[index][1]?.postLikedBy) {
+                                updatedPosts[index][1].postLikedBy = {};
                               }
-                              updatedPosts[index].postLikedBy[user] = true;
+                              updatedPosts[index][1].postLikedBy[user] = true;
                               return updatedPosts;
                             });
                           }
                         } else {
                           setPosts((prevPosts) => {
                             const updatedPosts = [...prevPosts];
-                            updatedPosts[index].postLikedBy = { [user]: true };
+                            updatedPosts[index][1].postLikedBy = {
+                              [user]: true,
+                            };
                             return updatedPosts;
                           });
-                          likePost(index, user);
+                          likePost([post[0]], user);
                         }
                       } else {
                         navigate("/login");
                       }
                     }}
-                    className={`fa-solid fa-thumbs-up fa-lg ${
-                      post?.postLikedBy && post?.postLikedBy[user]
+                    className={`${post[0]} fa-solid fa-thumbs-up fa-lg ${
+                      post[1]?.postLikedBy && post[1]?.postLikedBy[user]
                         ? "liked"
                         : ""
                     }`}
                   ></i>
-                  {post?.postLikedBy
-                    ? Object.keys(post?.postLikedBy).length
+                  {post[1]?.postLikedBy
+                    ? Object.keys(post[1]?.postLikedBy).length
                     : 0}
                 </p>
                 <p>
