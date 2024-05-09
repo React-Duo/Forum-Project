@@ -35,10 +35,11 @@ const CreatePostForm = () => {
 
 
   const submitHandler = async (e) => {
+    let maxId = Math.max(...posts.map(post => post[1].Id));
     e.preventDefault();
     try {
       const post = await createPost({
-        Id: posts.length ,
+        Id: maxId + 1,
         postTitle: e.target.title.value,
         postContent: e.target.description.value,
         date: new Date().toLocaleDateString(),

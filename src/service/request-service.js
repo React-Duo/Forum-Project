@@ -23,7 +23,8 @@ export const getPosts = async () => {
   try {
     const snapshot = await get(ref(database, "posts"));
     if (snapshot.exists()) {
-      return snapshot.val();
+      const posts = Object.entries(snapshot.val());
+      return posts;
     }else {
         throw new Error('Data not found!');
   }
@@ -92,6 +93,7 @@ export const likePost = async (postId, user) => {
     return error.message;
   }
 };
+
 
 export const unlikePost = async (postId, user) => {
   try {
