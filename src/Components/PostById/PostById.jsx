@@ -16,9 +16,11 @@ const PostById = () => {
     const getSinglePost = async () => {
       const singlePost = await getPostById(postId);
       const { postAuthor, postTitle, postContent, date } = singlePost;
+
       const likes = Object.entries(singlePost.postLikedBy).map(entry => entry[0]);
-      let comments = await getCommentsByPost(+postId);
-      comments = Object.values(comments).filter(comment => comment);
+
+      const data = await getCommentsByPost(+postId);
+      const comments = (data === "Data not found!") ? [] : Object.values(data).filter(comment => comment);
       setPost({postAuthor, postTitle, postContent, date, likes, comments});
     }
     getSinglePost();
