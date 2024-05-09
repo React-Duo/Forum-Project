@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./AllComments.css";
 import { assets } from "../../assets/assets";
 
@@ -6,9 +6,8 @@ const AllComments = (props) => {
 
   return (
     <div className="allComments">
-    <h5>All comments</h5>
-    {props.comments && props.comments.map(comment => {
-      console.log(comment);
+      <h5>All comments</h5>
+    {props.comments && (props.comments.length ? props.comments.map(comment => {
       return <div className="comment">
           <div className="personDetails">
             <img src={assets.profile}></img>
@@ -26,7 +25,7 @@ const AllComments = (props) => {
           </div>
           <hr/>
       </div>
-    })}
+    }) : <h5>No Comments added yet.</h5>)}
     </div>
   )
 };
