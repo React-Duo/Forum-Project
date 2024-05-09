@@ -22,9 +22,6 @@ export const getPosts = async () => {
   goOnline(database);
   try {
     const snapshot = await get(ref(database, "posts"));
-
-    console.log(snapshot);
-    
     if (snapshot.exists()) {
       return snapshot.val();
     }else {
