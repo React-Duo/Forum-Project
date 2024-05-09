@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import AuthContext from '../../Context/AuthContext';
 import { getPostById, getCommentsByPost } from '../../service/request-service.js';
 import AllComments from '../AllComments/AllComments.jsx';
 import { assets } from "../../assets/assets";
@@ -10,15 +9,12 @@ const PostById = () => {
   const params = useParams();
   const postId = params.id;
   const [post, setPost] = useState(null);
-  const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
   useEffect(() => {
     const getSinglePost = async () => {
       const singlePost = await getPostById(postId);
       const { postAuthor, postTitle, postContent, date } = singlePost;
-
-      const likes = Object.entries(singlePost.postLikedBy).map(entry => entry[0]);
-
+      const likes = (singlePost.postLikedBy) ? Object.entries(singlePost.postLikedBy).map(entry => entry[0]) : [];
       const data = await getCommentsByPost(+postId);
       const comments = (data === "Data not found!") ? [] : Object.values(data).filter(comment => comment);
       setPost({postAuthor, postTitle, postContent, date, likes, comments});
