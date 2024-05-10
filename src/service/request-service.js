@@ -81,6 +81,14 @@ export const getSingleComment = async (commentId) => {
   }
 }
 
+export const updatePostLikes = async (postId, postLikedBy) => {
+  try {
+    return await update(ref(database, `posts/${postId}`), {postLikedBy});
+  } catch (error) {
+    return error.message;
+  }
+}
+
 export const updateCommentLikes = async (commentId, commentLikedBy) => {
   try {
     return await update(ref(database, `comments/${commentId}`), {commentLikedBy});
