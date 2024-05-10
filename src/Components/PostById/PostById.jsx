@@ -16,17 +16,11 @@ const PostById = () => {
       const { postAuthor, postTitle, postContent, date } = singlePost;
       const likes = (singlePost.postLikedBy) ? Object.entries(singlePost.postLikedBy).map(entry => entry[0]) : [];
       const data = await getCommentsByPost(+postId);
-      const comments = (data === "Data not found!") ? [] : Object.values(data).filter(comment => comment);
+      const comments = (data !== "Data not found!") ? Object.entries(data).map(([key, comment]) => comment = {id: key, ...comment}) : [];
       setPost({postAuthor, postTitle, postContent, date, likes, comments});
     }
     getSinglePost();
   }, []);
-
-
-
-  const viewLikes = (event) => {
-    event.preventDefault();
-  }
 
   return (
     post && 
