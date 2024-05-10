@@ -20,7 +20,7 @@ const PostById = () => {
       setPost({postAuthor, postTitle, postContent, date, likes, comments});
     }
     getSinglePost();
-  }, []);
+  }, [post]);
 
   return (
     post && 
