@@ -57,7 +57,7 @@
   box-shadow: 1px 1px 3px black;
 }
 
-.postsContainer{
+.postsContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -114,6 +114,13 @@
   cursor: pointer;
   font-weight: bold;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.767);
+}
+.editOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 15px;
+  gap: 15px;
 }
 
 .fa-solid {
@@ -177,7 +184,6 @@
   transform: translate(0em, 0.2em);
 }
 
-
 .search {
   /* display: inline-block; */
   position: relative;
@@ -211,11 +217,11 @@
   background-color: blue;
 }
 
-#likeButton:hover{
+#likeButton:hover {
   color: rgb(244, 59, 93);
 }
 
-.liked{
+.liked {
   color: rgb(244, 59, 93);
 }
 @media (max-width: 600px) {

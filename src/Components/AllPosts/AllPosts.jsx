@@ -7,6 +7,7 @@ import {
   likePost,
   unlikePost,
   getUsers,
+  removePost
 } from "../../service/request-service";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +57,7 @@ const AllPosts = (props) => {
       }
     };
     fetchUsers();
-  }, [order]);
+  }, [order, posts]);
 
   return (
     <div className="postsContainer">
@@ -160,7 +161,11 @@ const AllPosts = (props) => {
                       .length
                   }
                 </p>
-                <p>{post?.date}</p>
+                <p>{post[1]?.date}</p>
+                <div className="editOptions">
+                <a><i className="fa-solid fa-pen-to-square"></i></a>
+                <a ><i onClick={() => removePost(post[0])} className="fa-solid fa-trash"></i></a>
+                </div>
               </div>
             </div>
           );
