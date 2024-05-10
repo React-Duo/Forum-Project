@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./AllComments.css";
 import { assets } from "../../assets/assets";
+import { getSingleComment, getUsers, updateCommentLikes } from "../../service/request-service";
+import AuthContext from '../../Context/AuthContext';
 
 const AllComments = (props) => {
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const handleLikes = async (commentId) => {
+    const users = await getUsers();
+    const currentUser = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
+    const comment = await getSingleComment(commentId);
+
+    if (comment.commentLikedBy) {
+      if(comment.commentLikedBy[currentUser.username]) {
+        delete comment.commentLikedBy[currentUser.username];
+      } else {
+        comment.commentLikedBy = {...comment.commentLikedBy, [currentUser.username]: true}
+      }
+    } else {
+      comment.commentLikedBy = {[currentUser.username]: true}
+    }
+
+    updateCommentLikes(commentId, comment.commentLikedBy);
+  }
 
   return (
     <div className="allComments">
@@ -18,11 +39,8 @@ const AllComments = (props) => {
           </div>
           <div className="interactions">
             <p>
-              <i className="fa-solid fa-thumbs-up fa-lg"></i>
+              <i className="fa-solid fa-thumbs-up fa-lg" onClick={() => handleLikes(comment.id)}></i>
             { comment.commentLikedBy ? Object.keys(comment.commentLikedBy).length : 0 }
-            {console.log(comment)}
-
-            {console.log(comment.commentLikedBy)}
             </p>
             <p>{comment.date}</p>
           </div>
