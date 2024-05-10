@@ -45,6 +45,7 @@ const Register = () => {
                         emailAddress: form.emailAddress, 
                         username: form.username, 
                         password: form.password,
+                        role: 'author',
                     });
 
                     if (!creationStatus) {
