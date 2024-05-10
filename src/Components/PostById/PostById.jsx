@@ -5,6 +5,7 @@ import {
   getCommentsByPost,
   getUsers,
   removePost,
+  updatePostContent
 } from "../../service/request-service.js";
 import AllComments from "../AllComments/AllComments.jsx";
 import { assets } from "../../assets/assets";
@@ -43,9 +44,14 @@ const PostById = () => {
   }, [user]);
 
   const [showOptions, setShowOptions] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [newContent, setNewContent] = useState("");
 
   const handleEditOptions = () => {
     setShowOptions(!showOptions);
+  };
+  const handleShowEdit = () => {
+    setShowEdit(!showEdit);
   };
 
   return (
@@ -73,7 +79,7 @@ const PostById = () => {
             {post.postAuthor === user ? (
               <div className="editOptions">
                 <a>
-                  <i className="fa-solid fa-pen-to-square"></i>
+                  <i onClick={handleShowEdit} className="fa-solid fa-pen-to-square"></i>
                 </a>
                 <a onClick={handleEditOptions}>
                   <i className="fa-solid fa-trash"></i>
@@ -84,11 +90,25 @@ const PostById = () => {
             )}
           </div>
         </div>
+        {showEdit && (
+          <div className="editPost">
+            <textarea
+              value={post.postContent}
+              placeholder="Content"
+              onChange={(e) => {
+                setPost({ ...post, postContent: e.target.value })
+                setNewContent(e.target.value);
+              }
+              }
+            ></textarea>
+            <button className="editBtn" onClick={() => updatePostContent(postId, post.postContent)}>Save</button>
+          </div>
+        )}
         {showOptions && (
           <div className="deleteConfirm">
             <p>Are you sure you want to delete the post</p>
-            <button onClick={() => removePost(postId)}>Yes</button>
-            <button onClick={handleEditOptions}>No</button>
+            <button className="editBtn" onClick={() => removePost(postId)}>Yes</button>
+            <button className="editBtn" onClick={handleEditOptions}>No</button>
           </div>
         )}
         <AllComments comments={post.comments} />

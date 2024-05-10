@@ -136,3 +136,11 @@ export const removePost = async (postId) => {
     return error.message;
   }
 }
+
+export const updatePostContent = async (postId, newContent) => {
+  try {
+    return await update(ref(database, `posts/${postId}`), { postContent: newContent });
+  } catch (error) {
+    return error.message;
+  }
+}
