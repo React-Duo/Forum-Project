@@ -41,7 +41,7 @@ const PostById = () => {
       }
     };
     fetchUsers();
-  }, [user]);
+  }, [user, post]);
 
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
