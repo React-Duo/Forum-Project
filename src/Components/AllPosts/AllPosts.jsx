@@ -57,7 +57,8 @@ const AllPosts = (props) => {
       }
     };
     fetchUsers();
-  }, [order, posts]);
+  }, [order]);
+  
 
   return (
     <div className="postsContainer">
@@ -153,18 +154,28 @@ const AllPosts = (props) => {
                 </p>
                 <p>
                   <i
-                    onClick={() => navigate(`/posts/${index}`)}
+                    onClick={() => {
+                      navigate(`/posts/${post[0]}`)
+                    }}
                     className="fa-solid fa-comment fa-lg"
                   ></i>
                   {
-                    comments.filter((comment) => comment.relatedPost === index)
-                      .length
+                    comments.filter(comment => post[1].Id === comment.relatedPost).length
                   }
                 </p>
                 <p>{post[1]?.date}</p>
                 <div className="editOptions">
                 <a><i className="fa-solid fa-pen-to-square"></i></a>
-                <a ><i onClick={() => removePost(post[0])} className="fa-solid fa-trash"></i></a>
+                <a ><i onClick={() => {
+                  removePost(post[0])
+                  setPosts((prevPosts) => {
+                    const updatedPosts = [...prevPosts];
+                    updatedPosts.splice(index, 1);
+                    return updatedPosts;
+                  });
+                  }
+
+                } className="fa-solid fa-trash"></i></a>
                 </div>
               </div>
             </div>
