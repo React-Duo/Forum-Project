@@ -128,3 +128,11 @@ export const unlikePost = async (postId, user) => {
     return error.message;
   }
 }
+
+export const removePost = async (postId) => {
+  try {
+    return await set(ref(database, `posts/${postId}`), null);
+  } catch (error) {
+    return error.message;
+  }
+}
