@@ -114,6 +114,14 @@
   color: #8d8d8d;
 }
 
+.confirmationMessage{
+  color: #010101;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 1px 1px 2px black;
+}
+
 @media (max-width: 1218px) {
   .containerForm {
     top: 7em;

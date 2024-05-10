@@ -3,6 +3,7 @@ import "./CreatePostForm.css";
 import { createPost, getPosts, getUsers, } from "../../service/request-service";
 import AuthContext from '../../Context/AuthContext.jsx';
 
+
 const CreatePostForm = () => {
   const [posts, setPosts] = useState([]);
   const [form, setForm] = useState({
@@ -33,6 +34,12 @@ const CreatePostForm = () => {
     fetchUsers();
   }, []);
 
+
+  const [confirmationMessage, setConfirmationMessage] = useState(false);
+
+  const handleConfirmationMessage = () => {
+    setConfirmationMessage(!confirmationMessage);
+  };
 
   const submitHandler = async (e) => {
     let maxId = Math.max(...posts.map(post => post[1].Id));
@@ -75,11 +82,16 @@ const CreatePostForm = () => {
             </div>
           </div>
           <div className="modal__footer">
-            <button  type="submit" className="buttonForm button--primary">Create post</button>
+            <button onClick={handleConfirmationMessage} type="submit" className="buttonForm button--primary">Create post</button>
           </div>
           </form>
         </div>
       </div>
+      { (
+          <div className="confirmationMessage">
+            <h2>Your post has been created!</h2>
+          </div>
+      )}
     </div>
   );
 };
