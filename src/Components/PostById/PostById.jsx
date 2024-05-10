@@ -5,7 +5,8 @@ import {
   getCommentsByPost,
   getUsers,
   removePost,
-  updatePostContent
+  updatePostContent,
+  updatePostLikes
 } from "../../service/request-service.js";
 import AllComments from "../AllComments/AllComments.jsx";
 import { assets } from "../../assets/assets";
@@ -41,7 +42,7 @@ const PostById = () => {
       }
     };
     fetchUsers();
-  }, [user, post]);
+  }, [user]);
 
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -53,6 +54,22 @@ const PostById = () => {
   const handleShowEdit = () => {
     setShowEdit(!showEdit);
   };
+
+  const handleLikes = async (id) => {
+    const users = await getUsers();
+    const currentUser = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
+    const post = await getPostById(id);
+    if (post.postLikedBy) {
+      if(post.postLikedBy[currentUser.username]) {
+        delete post.postLikedBy[currentUser.username];
+      } else {
+        post.postLikedBy = {...post.postLikedBy, [currentUser.username]: true}
+      }
+    } else {
+      post.postLikedBy = {[currentUser.username]: true}
+    }
+    updatePostLikes(id, post.postLikedBy);
+  }
 
   return (
     post && (
@@ -68,7 +85,7 @@ const PostById = () => {
           </div>
           <div className="interactions">
             <p>
-              <i className="fa-solid fa-thumbs-up fa-lg"></i>
+              <i className="fa-solid fa-thumbs-up fa-lg" onClick={() => handleLikes(postId)}></i>
               {post.likes.length}
             </p>
             <p>
