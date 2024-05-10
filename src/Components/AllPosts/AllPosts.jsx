@@ -7,7 +7,6 @@ import {
   likePost,
   unlikePost,
   getUsers,
-  removePost
 } from "../../service/request-service";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -164,19 +163,7 @@ const AllPosts = (props) => {
                   }
                 </p>
                 <p>{post[1]?.date}</p>
-                {post[1]?.postAuthor === user ? (<div className="editOptions">
-                <a><i className="fa-solid fa-pen-to-square"></i></a>
-                <a ><i onClick={() => {
-                  removePost(post[0])
-                  setPosts((prevPosts) => {
-                    const updatedPosts = [...prevPosts];
-                    updatedPosts.splice(index, 1);
-                    return updatedPosts;
-                  });
-                  }
-
-                } className="fa-solid fa-trash"></i></a>
-                </div>) : ""}               
+                              
               </div>
             </div>
           );
