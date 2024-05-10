@@ -164,7 +164,7 @@ const AllPosts = (props) => {
                   }
                 </p>
                 <p>{post[1]?.date}</p>
-                <div className="editOptions">
+                {post[1]?.postAuthor === user ? (<div className="editOptions">
                 <a><i className="fa-solid fa-pen-to-square"></i></a>
                 <a ><i onClick={() => {
                   removePost(post[0])
@@ -176,7 +176,7 @@ const AllPosts = (props) => {
                   }
 
                 } className="fa-solid fa-trash"></i></a>
-                </div>
+                </div>) : ""}               
               </div>
             </div>
           );
