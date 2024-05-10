@@ -68,6 +68,27 @@ export const getCommentsByPost = async (postId) => {
     }
 }
 
+export const getSingleComment = async (commentId) => {
+  try {
+    const snapshot = await get(ref(database, `comments/${commentId}`));
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      throw new Error('Data not found!');
+    }
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export const updateCommentLikes = async (commentId, commentLikedBy) => {
+  try {
+    return await update(ref(database, `comments/${commentId}`), {commentLikedBy});
+  } catch (error) {
+    return error.message;
+  }
+}
+
 export const checkIfUserExists = async (username) => {
   goOnline(database);
   try {
