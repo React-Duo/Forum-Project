@@ -12,7 +12,7 @@ import {
   ALPHA_NUMERIC_REGEX,
   SPECIAL_CHARS_REGEX,
 } from "../../common/constants.js";
-import { set } from "firebase/database";
+import { uploadFile } from "../../service/storage.js";
 
 const Profile = () => {
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
@@ -24,6 +24,7 @@ const Profile = () => {
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [logo, setLogo] = useState({});
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -62,20 +63,20 @@ const Profile = () => {
           return;
         }
         break;
-        case "password":
-            if (
-                value.length < 8 ||
-                !SPECIAL_CHARS_REGEX.test(value) ||
-                !DIGIT_REGEX.test(value) ||
-                !LETTER_REGEX.test(value)
-            ) {
-                setError(
-                `Password must be at least:8 characters, ONE digit, ONE letter, ONE special symbol`
-                );
-                setSuccess(null);
-                return;
-            }
-            break;
+      case "password":
+        if (
+          value.length < 8 ||
+          !SPECIAL_CHARS_REGEX.test(value) ||
+          !DIGIT_REGEX.test(value) ||
+          !LETTER_REGEX.test(value)
+        ) {
+          setError(
+            `Password must be at least:8 characters, ONE digit, ONE letter, ONE special symbol`
+          );
+          setSuccess(null);
+          return;
+        }
+        break;
     }
 
     // Update the userDetails state
@@ -87,6 +88,11 @@ const Profile = () => {
     editCredential(user.username, name, value);
     setSuccess("Success");
     setError(null);
+  };
+
+  const logoUpdate = (e) => {
+    const file = e.target.files[0];
+    setLogo(file);
   };
 
   return (
@@ -120,9 +126,26 @@ const Profile = () => {
                   </g>
                 </svg>
               </div>
-              <input type="file" id="file"></input>
+              <input
+                onChange={(e) => logoUpdate(e)}
+                type="file"
+                id="file"
+              ></input>
             </label>
-            <button>Change photo</button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                uploadFile(user.username, logo, logo.name)
+                  .then(() => {
+                    console.log("File uploaded successfully");
+                  })
+                  .catch((error) => {
+                    console.error("Error uploading file:", error);
+                  });
+              }}
+            >
+              Change photo
+            </button>
           </form>
         </div>
         {error && <div className="confirmMessage">{error}</div>} <br />
@@ -173,7 +196,7 @@ const Profile = () => {
           <input defaultValue={user?.username} type="text"></input>
         </div>
         <div className="optionRow" id="emailSection">
-          <h2>email</h2>
+          <h2>Email</h2>
           <input defaultValue={user?.emailAddress} type="text"></input>
         </div>
       </div>
