@@ -17,6 +17,7 @@ const PostById = () => {
   const params = useParams();
   const postId = params.id;
   const [post, setPost] = useState(null);
+  const [status, setStatus] = useState(false);
   const [user, setUser] = useState();
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
@@ -42,7 +43,7 @@ const PostById = () => {
       }
     };
     fetchUsers();
-  }, [user]);
+  }, [user, status]);
 
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -55,6 +56,14 @@ const PostById = () => {
     setShowEdit(!showEdit);
   };
 
+  const updateState = () => {
+    if (status) {
+      setStatus(false);
+    } else {
+      setStatus(true);
+    }
+  }
+  
   const handleLikes = async (id) => {
     const users = await getUsers();
     const currentUser = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
@@ -69,6 +78,7 @@ const PostById = () => {
       post.postLikedBy = {[currentUser.username]: true}
     }
     updatePostLikes(id, post.postLikedBy);
+    updateState();
   }
 
   return (
@@ -128,7 +138,7 @@ const PostById = () => {
             <button className="editBtn" onClick={handleEditOptions}>No</button>
           </div>
         )}
-        <AllComments comments={post.comments} />
+        <AllComments comments={post.comments} fn={updateState}/>
       </div>
     )
   );
