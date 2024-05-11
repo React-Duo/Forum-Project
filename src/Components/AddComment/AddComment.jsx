@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from '../../Context/AuthContext';
 import { createComment, getComments, getUsers } from '../../service/request-service';
 import "./AddComment.css";
@@ -9,32 +9,54 @@ const MAX_CHARS = 300;
 const AddComment = (props) => {
   const {isLoggedIn} = useContext(AuthContext);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [content, setContent] = useState(null);
+
+  const handleAddComment = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const data = await getComments();
+      const comments = Object.entries(data).map(([key, comment]) => comment = {id: key, ...comment});
+      const users = await getUsers();
+      const author = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);  
+
+      const maxId = Math.max(...comments.map(comment => comment.id));
+      const newComment = {
+        id: maxId + 1,
+        commentAuthor: author.username,
+        commentContent: content,
+        date: new Date().toLocaleDateString(),
+        relatedPost: +props.relatedPost,
+      }
+      await createComment(newComment);
+      props.fn();
+    } catch (error) {
+      setError("An error occurred while adding the comment.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (content) {
+      handleAddComment();
+    }
+  }, [content]);
 
   const addComment = async (event) => {
     event.preventDefault();
     const content = event.target.textarea.value;
     event.target.textarea.value = '';
-    setError(null);
-
-    const data = await getComments();
-    const comments = Object.entries(data).map(([key, comment]) => comment = {id: key, ...comment});
-    const users = await getUsers();
-    const author = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
-
     if (content.length < MIN_CHARS || content.length > MAX_CHARS) {
       setError(`Comment length does not comply with requirements.`);
       return;
     }
-    const maxId = Math.max(...comments.map(comment => comment.id));
-    const newComment = {
-      id: maxId + 1,
-      commentAuthor: author.username,
-      commentContent: content,
-      date: new Date().toLocaleDateString(),
-      relatedPost: +props.relatedPost,
-    }
-    await createComment(newComment);
-    props.fn();
+    setContent(content);
+  }
+
+  if (loading) {
+    return <div className="spinner"></div>
   }
 
   return (
