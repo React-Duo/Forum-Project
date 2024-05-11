@@ -18,7 +18,7 @@ const HomeHeader = () => {
     fetchPosts();
 
     const fetchComments = async () => {
-      const data = await getComments();
+      const data = await getComments(); 
       const comments = (data !== 'Data not found!') ? Object.entries(data).map(([key, comment]) => comment = {id: key, ...comment}) : [];
       setComments(comments);
       const userCommentCount = comments.reduce((acc, comment) => {
