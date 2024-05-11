@@ -40,7 +40,8 @@ const AllPosts = (props) => {
     fetchPosts();
 
     const fetchComments = async () => {
-      const comments = await getComments();
+      const data = await getComments();
+      const comments = (data !== 'Data not found!') ? Object.entries(data).map(([key, comment]) => comment = {id: key, ...comment}) : [];
       setComments(comments);
     };
     fetchComments();
