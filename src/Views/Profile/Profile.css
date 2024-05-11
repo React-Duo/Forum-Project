@@ -129,6 +129,15 @@
   display: none;
 }
 
+.confirmMessage{
+  width: 350px;
+  font-size: 21px;
+  margin: 0 auto;
+  text-align: center;
+  color: rgba(255, 0, 0, 0.849);
+  padding: 0px 20px;
+}
+
 @media (max-width: 637px) {
   .profileContainer {
     width: 380px;

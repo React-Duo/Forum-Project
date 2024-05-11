@@ -3,10 +3,27 @@ import "./Profile.css";
 import { assets } from "../../assets/assets";
 import { getUsers, editCredential } from "../../service/request-service";
 import AuthContext from "../../Context/AuthContext.jsx";
+import {
+  MIN_CHAR_LENGTH,
+  MAX_CHAR_LENGTH,
+  EMAIL_REGEX,
+  DIGIT_REGEX,
+  LETTER_REGEX,
+  ALPHA_NUMERIC_REGEX,
+  SPECIAL_CHARS_REGEX,
+} from "../../common/constants.js";
+import { set } from "firebase/database";
 
 const Profile = () => {
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
   const [user, setUser] = useState();
+  const [userDetails, setUserDetails] = useState({
+    firstName: "",
+    lastName: "",
+    password: "",
+  });
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -17,11 +34,60 @@ const Profile = () => {
           (user) => user[1].emailAddress === isLoggedIn.user
         )[0][1];
         setUser(currentUsername);
+
+        setUserDetails({
+          firstName: currentUsername.firstName,
+          lastName: currentUsername.lastName,
+          password: currentUsername.password,
+        });
       }
     };
-
     fetchUsers();
   }, []);
+
+  const handleInputChange = (name, value) => {
+    switch (name) {
+      case "lastName":
+      case "firstName":
+        if (
+          value.length < MIN_CHAR_LENGTH ||
+          value.length > MAX_CHAR_LENGTH ||
+          DIGIT_REGEX.test(value) ||
+          SPECIAL_CHARS_REGEX.test(value)
+        ) {
+          setError(
+            `First name must not contain special characters or digits and must be between ${MIN_CHAR_LENGTH} and ${MAX_CHAR_LENGTH} characters long.`
+          );
+          setSuccess(null);
+          return;
+        }
+        break;
+        case "password":
+            if (
+                value.length < 8 ||
+                !SPECIAL_CHARS_REGEX.test(value) ||
+                !DIGIT_REGEX.test(value) ||
+                !LETTER_REGEX.test(value)
+            ) {
+                setError(
+                `Password must be at least:8 characters, ONE digit, ONE letter, ONE special symbol`
+                );
+                setSuccess(null);
+                return;
+            }
+            break;
+    }
+
+    // Update the userDetails state
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+
+    editCredential(user.username, name, value);
+    setSuccess("Success");
+    setError(null);
+  };
 
   return (
     <div className="profileContainer">
@@ -59,20 +125,48 @@ const Profile = () => {
             <button>Change photo</button>
           </form>
         </div>
+        {error && <div className="confirmMessage">{error}</div>} <br />
+        {success && <div className="confirmMessage">{success}</div>} <br />
         <div className="optionRow" id="fNameSection">
           <h2>First Name</h2>
-          <input name="firstName" type="text"></input>
-          <button>Edit</button>
+          <input
+            onChange={(e) => (userDetails.firstName = e.target.value)}
+            placeholder={user?.firstName}
+            type="text"
+          ></input>
+          <button
+            onClick={() =>
+              handleInputChange("firstName", userDetails.firstName)
+            }
+          >
+            Edit
+          </button>
         </div>
         <div className="optionRow" id="lNameSection">
           <h2>Last Name</h2>
-          <input type="text" placeholder={user?.lastName}></input>
-          <button>Edit</button>
+          <input
+            onChange={(e) => (userDetails.lastName = e.target.value)}
+            type="text"
+            placeholder={user?.lastName}
+          ></input>
+          <button
+            onClick={() => handleInputChange("lastName", userDetails.lastName)}
+          >
+            Edit
+          </button>
         </div>
         <div className="optionRow" id="passwordSection">
           <h2>Password</h2>
-          <input type="text" placeholder={user?.password}></input>
-          <button>Edit</button>
+          <input
+            onChange={(e) => (userDetails.password = e.target.value)}
+            type="text"
+            placeholder={user?.password}
+          ></input>
+          <button
+            onClick={() => handleInputChange("password", userDetails.password)}
+          >
+            Edit
+          </button>
         </div>
         <div className="optionRow" id="usernameSection">
           <h2>Username</h2>
