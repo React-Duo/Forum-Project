@@ -131,7 +131,6 @@ export const getPostById = async (postId) => {
   }
 }
 
-
 export const createPost = async (postDetails) => {
   try {
     return await set(ref(database, `posts/${postDetails.Id}`), postDetails);
@@ -140,6 +139,13 @@ export const createPost = async (postDetails) => {
   }
 }
 
+export const createComment = async (commentDetails) => {
+  try {
+    return await set(ref(database, `comments/${commentDetails.id}`), commentDetails);
+  } catch (error) {
+    return error.message;
+  }
+}
 
 export const likePost = async (postId, user) => {
   try {
