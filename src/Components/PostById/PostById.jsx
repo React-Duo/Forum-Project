@@ -9,6 +9,7 @@ import {
   updatePostLikes
 } from "../../service/request-service.js";
 import AllComments from "../AllComments/AllComments.jsx";
+import AddComment from '../AddComment/AddComment.jsx';
 import { assets } from "../../assets/assets";
 import "./PostById.css";
 import AuthContext from "../../Context/AuthContext.jsx";
@@ -139,6 +140,7 @@ const PostById = () => {
           </div>
         )}
         <AllComments comments={post.comments} fn={updateState}/>
+        <AddComment relatedPost={postId} />
       </div>
     )
   );
