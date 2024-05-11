@@ -144,3 +144,11 @@ export const updatePostContent = async (postId, newContent) => {
     return error.message;
   }
 }
+
+export const editCredential  = async (user, credential, newCredential) => {
+  try {
+    return await update(ref(database, `users/${user}`), { [credential]: newCredential });
+  } catch (error) {
+    return error.message;
+  }
+}
