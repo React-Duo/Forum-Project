@@ -1,0 +1,150 @@
+.profileContainer {
+  width: 600px;
+  height: auto;
+  background: rgba(37, 37, 37, 0.846);
+  transition: 1s ease-in-out;
+  clip-path: polygon(
+    30px 0%,
+    100% 0,
+    100% calc(100% - 30px),
+    calc(100% - 30px) 100%,
+    0 100%,
+    0% 30px
+  );
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px 0px;
+}
+
+.profileOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#imgSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.optionRow {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.optionRow h2 {
+  width: 120px;
+  font-weight: 400;
+  color: white;
+  display: block;
+  text-align: center;
+  font-size: 1.5em;
+  margin: 0.6em;
+}
+
+.optionRow input {
+  width: 200px;
+  height: 60px;
+  border-radius: 15px;
+  padding: 11px;
+}
+
+.optionRow button {
+  padding: 0.8em 1.7em;
+  display: block;
+  margin: auto;
+  border-radius: 25px;
+  border: none;
+  font-weight: bold;
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+  transition: 0.4s ease-in-out;
+}
+
+.optionRow button:hover {
+  background: red;
+  color: white;
+  cursor: pointer;
+}
+
+#profileImage {
+  width: 11em;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.654);
+  margin: auto;
+  box-shadow: 15px 15px 30px rgb(140, 140, 140),
+    -15px -15px 30px rgb(60, 60, 60);
+}
+
+#imgSection img {
+  width: 11em;
+  height: 11em;
+  border-radius: 50%;
+}
+
+#changePhotoForm {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+/* form */
+.custum-file-upload {
+  height: 70px;
+  width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 0px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #cacaca;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+  box-shadow: 0px 48px 35px -48px rgba(0, 0, 0, 0.171);
+}
+
+.custum-file-upload .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum-file-upload .icon svg {
+  height: 30px;
+  fill: rgba(75, 85, 99, 1);
+}
+
+.custum-file-upload input {
+  display: none;
+}
+
+@media (max-width: 637px) {
+  .profileContainer {
+    width: 380px;
+  }
+
+  .optionRow {
+    gap: 10px;
+  }
+
+  .optionRow h2 {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+  }
+
+  .optionRow input {
+    width: 155px;
+    height: 50px;
+  }
+}
