@@ -31,6 +31,15 @@
   box-shadow: 0 0 0 2px #333;
 }
 
+div #error {
+  color: rgb(197, 34, 34);
+  font-weight: bold;
+}
+
+form h5 i {
+  color: rgb(197, 34, 34);
+  font-weight: bold;
+}
 
 .buttonSend {
     width: 200px;
