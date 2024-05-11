@@ -140,7 +140,7 @@ const PostById = () => {
           </div>
         )}
         <AllComments comments={post.comments} fn={updateState}/>
-        <AddComment relatedPost={postId} />
+        <AddComment relatedPost={postId} fn={updateState}/>
       </div>
     )
   );
