@@ -23,6 +23,7 @@ const AllComments = (props) => {
     }
 
     updateCommentLikes(commentId, comment.commentLikedBy);
+    props.fn();
   }
 
   return (
