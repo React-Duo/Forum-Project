@@ -10,6 +10,7 @@ import {
   SPECIAL_CHARS_REGEX,
 } from "../../common/constants.js";
 import { uploadFile, getFile } from "../../service/storage.js";
+import { changePassword } from "../../service/authentication-service.js";
 
 
 const Profile = () => {
@@ -43,6 +44,7 @@ const Profile = () => {
         });
       }
     };
+    
     fetchUsers();
   }, []);
 
@@ -193,7 +195,10 @@ const Profile = () => {
             placeholder={user?.password}
           ></input>
           <button
-            onClick={() => handleInputChange("password", userDetails.password)}
+            onClick={() => {
+              changePassword(userDetails.password);
+              handleInputChange("password", userDetails.password)
+              }}
           >
             Edit
           </button>

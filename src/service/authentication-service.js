@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword } from 'firebase/auth';
 import { app } from '../config/firebase-config.js';
 
 export const registerUser = async (emailAddress, password) => {
@@ -29,3 +29,15 @@ export const signOutUser = async () => {
         console.log(error.message);
     }
 }
+
+
+export const changePassword = async (newPassword) => {
+    try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        updatePassword(user, newPassword)
+    } catch (error) {
+        console.log(error.message);
+    }
+
+};
