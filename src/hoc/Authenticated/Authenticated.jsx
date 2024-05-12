@@ -6,15 +6,11 @@ const Authenticated = ({ children }) => {
 
     const { isLoggedIn } = useContext(AuthContext);
 
-    return (
-        <div>
-            {isLoggedIn.status ? children : (
-                <div className='authenticated-hoc'>
+    if (isLoggedIn.status) return children;
+
+    else return (<div className='authenticated-hoc'>
                     <h2>You need to be logged in to access this content.</h2>
-                </div>
-            )}
-        </div>
-    )
+                </div>)
 };
 
 export default Authenticated;
