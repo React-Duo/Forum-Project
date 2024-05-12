@@ -44,7 +44,6 @@ const Register = () => {
                         lastName: form.lastName, 
                         emailAddress: form.emailAddress, 
                         username: form.username, 
-                        password: form.password,
                         role: 'author',
                         photo: "https://firebasestorage.googleapis.com/v0/b/reactduo-forumproject.appspot.com/o/users%2Fall%2Fall?alt=media&token=341ed089-9a17-4908-840b-436d10677928"
                     });
@@ -106,7 +105,7 @@ const Register = () => {
 
         if (password.length < 8 || !SPECIAL_CHARS_REGEX.test(password) 
             || !DIGIT_REGEX.test(password) || !LETTER_REGEX.test(password) ) {
-                setError(`${password} is not a valid password.`);
+                setError(`The provided password is invalid.`);
                 return;
         }
 
