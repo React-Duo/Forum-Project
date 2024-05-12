@@ -21,6 +21,7 @@ const Profile = () => {
     firstName: "",
     lastName: "",
     password: "",
+    photo: "",
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -40,6 +41,7 @@ const Profile = () => {
           firstName: currentUsername.firstName,
           lastName: currentUsername.lastName,
           password: currentUsername.password,
+          photo: currentUsername.photo,
         });
       }
     };
@@ -92,15 +94,23 @@ const Profile = () => {
 
   const logoUpdate = (e) => {
     const file = e.target.files[0];
+    console.log(file);
     setLogo(file);
   };
+
+  const fetchPhoto = async () => {
+    console.log(user.username, logo.name);
+    // const url = await getFile(user.username, logo.name);
+    // console.log(url);
+  };
+  fetchPhoto();
 
   return (
     <div className="profileContainer">
       <div className="profileOptions">
         <div className="optionRow" id="imgSection">
           <div id="profileImage">
-            <img src={assets.profile}></img>
+            <img src={user?.photo}></img>
           </div>
           <form id="changePhotoForm">
             <label className="custum-file-upload" htmlFor="file">
