@@ -9,6 +9,7 @@ const HomeHeader = () => {
   const [comments, setComments] = useState([]);
   const [topUsers, setTopUsers] = useState([]);
   const [users, setUsers] = useState([]);
+ 
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -30,7 +31,7 @@ const HomeHeader = () => {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 6)
       .map(([user]) => user);
-
+   
     setTopUsers(topUsers);
     };
     fetchComments();
@@ -48,9 +49,17 @@ const HomeHeader = () => {
         <h2>Top members</h2>
         <div className="TopUsersList">
         {topUsers.map((user, index) => {
+          const allUsers = Object.entries(users);
+          let currentUsername;
+          if(allUsers.length > 0) {
+          currentUsername = allUsers.filter(
+          (el) => el[1].username === user
+        )[0][1]
+          }
+        
           return (
             <div className="TopUser"  key={index}>
-              <img src={assets.profile} alt=""></img>
+              <img src={currentUsername?currentUsername.photo: assets.profile} alt=""></img>
               <p>{user}</p>
             </div>
           )

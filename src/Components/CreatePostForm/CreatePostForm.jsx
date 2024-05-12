@@ -37,9 +37,7 @@ const CreatePostForm = () => {
 
   const [confirmationMessage, setConfirmationMessage] = useState(false);
 
-  const handleConfirmationMessage = () => {
-    setConfirmationMessage(!confirmationMessage);
-  };
+
 
   const submitHandler = async (e) => {
     let maxId = Math.max(...posts.map(post => post[1].Id));
@@ -53,6 +51,7 @@ const CreatePostForm = () => {
         postLikedBy: {},
         postAuthor: user,
       });
+      setConfirmationMessage(true)
     } catch (error) {
     }
   }
@@ -82,16 +81,16 @@ const CreatePostForm = () => {
             </div>
           </div>
           <div className="modal__footer">
-            <button onClick={handleConfirmationMessage} type="submit" className="buttonForm button--primary">Create post</button>
+            <button  type="submit" className="buttonForm button--primary">Create post</button>
           </div>
           </form>
         </div>
       </div>
-      { (
+      { confirmationMessage? (
           <div className="confirmationMessage">
             <h2>Your post has been created!</h2>
           </div>
-      )}
+      ) : ""}
     </div>
   );
 };

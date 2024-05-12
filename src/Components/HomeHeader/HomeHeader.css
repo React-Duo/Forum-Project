@@ -2,6 +2,7 @@
   width: 50px;
   height: 50px;
   margin-right: 5px;
+  border-radius: 50%;
 }
 
 .HomeHeader {
@@ -44,7 +45,7 @@
 
 .TopUser p {
   font-size: 17px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .CurrentStatus {
@@ -75,27 +76,25 @@
     gap: 10px;
   }
 
-  
   .TopUsersList {
     display: grid;
     grid-template-columns: auto auto;
     gap: 10px;
-}
+  }
 }
 
 @media (max-width: 650px) {
   .HomeHeader {
-    grid-template-columns: auto ;
-  
+    grid-template-columns: auto;
   }
-  
+
   .TopUsersList {
     display: grid;
     grid-template-columns: auto auto;
     gap: 10px;
-}
+  }
 
-.TopUsers {
-  height: auto;
-}
+  .TopUsers {
+    height: auto;
+  }
 }
