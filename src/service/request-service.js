@@ -68,6 +68,35 @@ export const getCommentsByPost = async (postId) => {
     }
 }
 
+export const getSingleComment = async (commentId) => {
+  try {
+    const snapshot = await get(ref(database, `comments/${commentId}`));
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      throw new Error('Data not found!');
+    }
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export const updatePostLikes = async (postId, postLikedBy) => {
+  try {
+    return await update(ref(database, `posts/${postId}`), {postLikedBy});
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export const updateCommentLikes = async (commentId, commentLikedBy) => {
+  try {
+    return await update(ref(database, `comments/${commentId}`), {commentLikedBy});
+  } catch (error) {
+    return error.message;
+  }
+}
+
 export const checkIfUserExists = async (username) => {
   goOnline(database);
   try {
@@ -102,7 +131,6 @@ export const getPostById = async (postId) => {
   }
 }
 
-
 export const createPost = async (postDetails) => {
   try {
     return await set(ref(database, `posts/${postDetails.Id}`), postDetails);
@@ -111,6 +139,13 @@ export const createPost = async (postDetails) => {
   }
 }
 
+export const createComment = async (commentDetails) => {
+  try {
+    return await set(ref(database, `comments/${commentDetails.id}`), commentDetails);
+  } catch (error) {
+    return error.message;
+  }
+}
 
 export const likePost = async (postId, user) => {
   try {

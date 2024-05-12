@@ -5,9 +5,11 @@ import {
   getCommentsByPost,
   getUsers,
   removePost,
-  updatePostContent
+  updatePostContent,
+  updatePostLikes
 } from "../../service/request-service.js";
 import AllComments from "../AllComments/AllComments.jsx";
+import AddComment from '../AddComment/AddComment.jsx';
 import { assets } from "../../assets/assets";
 import "./PostById.css";
 import AuthContext from "../../Context/AuthContext.jsx";
@@ -16,6 +18,7 @@ const PostById = () => {
   const params = useParams();
   const postId = params.id;
   const [post, setPost] = useState(null);
+  const [status, setStatus] = useState(false);
   const [user, setUser] = useState();
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
@@ -41,7 +44,7 @@ const PostById = () => {
       }
     };
     fetchUsers();
-  }, [user]);
+  }, [user, status]);
 
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -53,6 +56,31 @@ const PostById = () => {
   const handleShowEdit = () => {
     setShowEdit(!showEdit);
   };
+
+  const updateState = () => {
+    if (status) {
+      setStatus(false);
+    } else {
+      setStatus(true);
+    }
+  }
+  
+  const handleLikes = async (id) => {
+    const users = await getUsers();
+    const currentUser = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
+    const post = await getPostById(id);
+    if (post.postLikedBy) {
+      if(post.postLikedBy[currentUser.username]) {
+        delete post.postLikedBy[currentUser.username];
+      } else {
+        post.postLikedBy = {...post.postLikedBy, [currentUser.username]: true}
+      }
+    } else {
+      post.postLikedBy = {[currentUser.username]: true}
+    }
+    updatePostLikes(id, post.postLikedBy);
+    updateState();
+  }
 
   return (
     post && (
@@ -68,7 +96,7 @@ const PostById = () => {
           </div>
           <div className="interactions">
             <p>
-              <i className="fa-solid fa-thumbs-up fa-lg"></i>
+              <i className="fa-solid fa-thumbs-up fa-lg" onClick={() => handleLikes(postId)}></i>
               {post.likes.length}
             </p>
             <p>
@@ -111,7 +139,8 @@ const PostById = () => {
             <button className="editBtn" onClick={handleEditOptions}>No</button>
           </div>
         )}
-        <AllComments comments={post.comments} />
+        <AllComments comments={post.comments} fn={updateState}/>
+        <AddComment relatedPost={postId} fn={updateState}/>
       </div>
     )
   );

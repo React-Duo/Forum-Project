@@ -7,7 +7,6 @@ const SinglePost = () => {
   return (
     <div className="singlePostContainer">
       <PostById />
-      <AddComment />
     </div>
   );
 };
