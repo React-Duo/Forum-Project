@@ -65,7 +65,13 @@ const PostById = () => {
       setStatus(true);
     }
   }
-  
+
+  const deleteComments = async (comments) => {
+    post.comments.forEach(async comment => {
+      await removeComment(comment.id);
+    });
+  };
+  deleteComments()
   const handleLikes = async (id) => {
     const users = await getUsers();
     const currentUser = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
@@ -142,7 +148,7 @@ const PostById = () => {
             <p>Are you sure you want to delete the post</p>
             <button className="editBtn" onClick={() => {
               removePost(postId)
-              removeComment(post.comments[0].id)
+              deleteComments()
               }}>Yes</button>
             <button className="editBtn" onClick={handleEditOptions}>No</button>
           </div>
