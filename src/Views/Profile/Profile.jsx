@@ -1,19 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./Profile.css";
-import { assets } from "../../assets/assets";
 import { getUsers, editCredential } from "../../service/request-service";
 import AuthContext from "../../Context/AuthContext.jsx";
 import {
   MIN_CHAR_LENGTH,
   MAX_CHAR_LENGTH,
-  EMAIL_REGEX,
   DIGIT_REGEX,
   LETTER_REGEX,
-  ALPHA_NUMERIC_REGEX,
   SPECIAL_CHARS_REGEX,
 } from "../../common/constants.js";
 import { uploadFile, getFile } from "../../service/storage.js";
-import { get } from "firebase/database";
+
 
 const Profile = () => {
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
@@ -95,7 +92,6 @@ const Profile = () => {
 
   const logoUpdate = (e) => {
     const file = e.target.files[0];
-    // console.log(file);
     setLogo(file);
   };
 
