@@ -129,7 +129,10 @@ const PostById = () => {
               }
               }
             ></textarea>
-            <button className="editBtn" onClick={() => updatePostContent(postId, post.postContent)}>Save</button>
+            <button className="editBtn" onClick={() => {
+              updatePostContent(postId, post.postContent)
+              handleShowEdit()
+              }}>Save</button>
           </div>
         )}
         {showOptions && (
