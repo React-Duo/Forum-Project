@@ -13,7 +13,6 @@ const AddComment = (props) => {
   const [content, setContent] = useState(null);
 
   const handleAddComment = async () => {
-    setError(null);
     setLoading(true);
     try {
       const data = await getComments();
@@ -38,11 +37,7 @@ const AddComment = (props) => {
     }
   }
 
-  useEffect(() => {
-    if (content) {
-      handleAddComment();
-    }
-  }, [content]);
+  useEffect(() => { if (content) handleAddComment(); }, [content]);
 
   const addComment = async (event) => {
     event.preventDefault();
@@ -52,6 +47,7 @@ const AddComment = (props) => {
       setError(`Comment length does not comply with requirements.`);
       return;
     }
+    setError(null);
     setContent(content);
   }
 
