@@ -1,5 +1,5 @@
 import database from '../config/firebase-config.js';
-import { ref, push, get, set, update, query, equalTo, orderByChild, orderByKey, goOnline, goOffline } from "firebase/database";
+import { ref, get, set, update, query, equalTo, orderByChild, orderByKey, goOnline, goOffline } from "firebase/database";
 
 export const getUsers = async () => {
   goOnline(database);
@@ -112,6 +112,21 @@ export const checkIfUserExists = async (username) => {
 export const createUser = async (userDetails) => {
   try {
     return await set(ref(database, `users/${userDetails.username}`), userDetails);
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export const searchUser = async (searchString, searchTerm) => {
+  try {
+    const filteredUsers = query(ref(database, "users"), orderByChild(searchTerm), equalTo(searchString));
+    const snapshot = await get(filteredUsers);
+    if (snapshot.exists()) {
+      // goOffline(database);
+      return snapshot.val();
+    } else {
+      throw new Error("Data not found!");
+    }
   } catch (error) {
     return error.message;
   }
