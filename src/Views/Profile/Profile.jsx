@@ -11,6 +11,7 @@ import {
 } from "../../common/constants.js";
 import { uploadFile, getFile } from "../../service/storage.js";
 import { changePassword } from "../../service/authentication-service.js";
+import { set } from "firebase/database";
 
 
 const Profile = () => {
@@ -19,12 +20,13 @@ const Profile = () => {
   const [userDetails, setUserDetails] = useState({
     firstName: "",
     lastName: "",
-    password: "",
     photo: "",
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [logo, setLogo] = useState({});
+  const [password, setPassword] = useState("");
+ 
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -39,7 +41,6 @@ const Profile = () => {
         setUserDetails({
           firstName: currentUsername.firstName,
           lastName: currentUsername.lastName,
-          password: currentUsername.password,
           photo: currentUsername.photo,
         });
       }
@@ -65,23 +66,8 @@ const Profile = () => {
           return;
         }
         break;
-      case "password":
-        if (
-          value.length < 8 ||
-          !SPECIAL_CHARS_REGEX.test(value) ||
-          !DIGIT_REGEX.test(value) ||
-          !LETTER_REGEX.test(value)
-        ) {
-          setError(
-            `Password must be at least:8 characters, ONE digit, ONE letter, ONE special symbol`
-          );
-          setSuccess(null);
-          return;
-        }
-        break;
     }
 
-    // Update the userDetails state
     setUserDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
@@ -91,6 +77,24 @@ const Profile = () => {
     setSuccess("Success");
     setError(null);
   };
+
+  const editPassword =  (password) => {
+    if (
+      password.length < 8 ||
+      !SPECIAL_CHARS_REGEX.test(password) ||
+      !DIGIT_REGEX.test(password) ||
+      !LETTER_REGEX.test(password)
+    ) {
+      setError(
+        `Password must be at least:8 characters, ONE digit, ONE letter, ONE special symbol`
+      );
+      setSuccess(null);
+      return;
+    }
+    changePassword(password)
+    setSuccess("Success");
+    setError(null);
+  }
 
   const logoUpdate = (e) => {
     const file = e.target.files[0];
@@ -190,14 +194,13 @@ const Profile = () => {
         <div className="optionRow" id="passwordSection">
           <h2>Password</h2>
           <input
-            onChange={(e) => (userDetails.password = e.target.value)}
+            onChange={(e) => (setPassword(e.target.value))}
             type="text"
-            placeholder={user?.password}
+            placeholder={'*******'}
           ></input>
           <button
             onClick={() => {
-              changePassword(userDetails.password);
-              handleInputChange("password", userDetails.password)
+              editPassword(password)
               }}
           >
             Edit
@@ -205,11 +208,11 @@ const Profile = () => {
         </div>
         <div className="optionRow" id="usernameSection">
           <h2>Username</h2>
-          <input defaultValue={user?.username} type="text"></input>
+          <input placeholder={user?.username} type="text" disabled></input>
         </div>
         <div className="optionRow" id="emailSection">
           <h2>Email</h2>
-          <input defaultValue={user?.emailAddress} type="text"></input>
+          <input type="text" placeholder={user?.emailAddress} disabled></input>
         </div>
       </div>
     </div>
