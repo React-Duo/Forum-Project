@@ -14,6 +14,8 @@ import AddComment from '../AddComment/AddComment.jsx';
 import { assets } from "../../assets/assets";
 import "./PostById.css";
 import AuthContext from "../../Context/AuthContext.jsx";
+import { useNavigate } from "react-router-dom";
+
 
 const PostById = () => {
   const params = useParams();
@@ -22,6 +24,7 @@ const PostById = () => {
   const [status, setStatus] = useState(false);
   const [user, setUser] = useState();
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getSinglePost = async () => {
@@ -66,12 +69,14 @@ const PostById = () => {
     }
   }
 
-  const deleteComments = async (comments) => {
-    post.comments.forEach(async comment => {
-      await removeComment(comment.id);
-    });
+  const deleteComments = async () => {
+    if(post.comments) {
+      post.comments.forEach(async comment => {
+        await removeComment(comment.id);
+      });
+    }
   };
-  deleteComments()
+
   const handleLikes = async (id) => {
     const users = await getUsers();
     const currentUser = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
@@ -149,6 +154,7 @@ const PostById = () => {
             <button className="editBtn" onClick={() => {
               removePost(postId)
               deleteComments()
+              navigate("/posts")
               }}>Yes</button>
             <button className="editBtn" onClick={handleEditOptions}>No</button>
           </div>
