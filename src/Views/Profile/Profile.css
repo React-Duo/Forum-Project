@@ -58,6 +58,11 @@
   padding: 11px;
 }
 
+.optionRow input::placeholder {
+  color: rgb(78, 78, 81);
+  font-weight: bold;
+}
+
 .optionRow button {
   padding: 0.8em 1.7em;
   display: block;

@@ -11,7 +11,7 @@ import {
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext.jsx";
-import { or } from "firebase/firestore";
+
 
 const AllPosts = (props) => {
   const [posts, setPosts] = useState([]);
@@ -23,7 +23,7 @@ const AllPosts = (props) => {
   const [usersDetails, setUserDetails] = useState([])
   const [searchInput, setSearchInput] = useState("")
 
-  const { isLoggedIn, setLoginState } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -112,7 +112,9 @@ const AllPosts = (props) => {
               </div>
               <div className="postContent">
                 <a onClick={() => navigate(`/posts/${post[0]}`)}>
-                  {post[1]?.postTitle}
+                {props.home
+                    ? post[1]?.postTitle?.substring(0, 45) + "..."
+                    : post[1]?.postTitle}
                 </a>
                 <p>
                   {props.home
