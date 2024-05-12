@@ -25,6 +25,7 @@ const PostById = () => {
   const [user, setUser] = useState();
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [role, setRole] = useState();
 
   useEffect(() => {
     const getSinglePost = async () => {
@@ -43,8 +44,9 @@ const PostById = () => {
       if (isLoggedIn.status) {
         const currentUsername = users.filter(
           (user) => user[1].emailAddress === isLoggedIn.user
-        )[0][0];
-        setUser(currentUsername);
+        )[0];
+        setRole(currentUsername[1].role);
+        setUser(currentUsername[0]);
       }
     };
     fetchUsers();
@@ -52,7 +54,6 @@ const PostById = () => {
 
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [newContent, setNewContent] = useState("");
 
   const handleEditOptions = () => {
     setShowOptions(!showOptions);
@@ -116,7 +117,7 @@ const PostById = () => {
               {post.comments.length}
             </p>
             <p>{post.date}</p>
-            {post.postAuthor === user ? (
+            {post.postAuthor === user || role === "admin" ? (
               <div className="editOptions">
                 <a>
                   <i onClick={handleShowEdit} className="fa-solid fa-pen-to-square"></i>
@@ -137,7 +138,6 @@ const PostById = () => {
               placeholder="Content"
               onChange={(e) => {
                 setPost({ ...post, postContent: e.target.value })
-                setNewContent(e.target.value);
               }
               }
             ></textarea>
