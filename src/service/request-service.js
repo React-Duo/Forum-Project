@@ -172,6 +172,14 @@ export const removePost = async (postId) => {
   }
 }
 
+export const removeComment = async (commentId) => {
+  try {
+    return await set(ref(database, `comments/${commentId}`), null);
+  } catch (error) {
+    return error.message;
+  }
+}
+
 export const updatePostContent = async (postId, newContent) => {
   try {
     return await update(ref(database, `posts/${postId}`), { postContent: newContent });

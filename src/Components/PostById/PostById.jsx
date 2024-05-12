@@ -6,7 +6,8 @@ import {
   getUsers,
   removePost,
   updatePostContent,
-  updatePostLikes
+  updatePostLikes,
+  removeComment
 } from "../../service/request-service.js";
 import AllComments from "../AllComments/AllComments.jsx";
 import AddComment from '../AddComment/AddComment.jsx';
@@ -136,9 +137,13 @@ const PostById = () => {
           </div>
         )}
         {showOptions && (
+          
           <div className="deleteConfirm">
             <p>Are you sure you want to delete the post</p>
-            <button className="editBtn" onClick={() => removePost(postId)}>Yes</button>
+            <button className="editBtn" onClick={() => {
+              removePost(postId)
+              removeComment(post.comments[0].id)
+              }}>Yes</button>
             <button className="editBtn" onClick={handleEditOptions}>No</button>
           </div>
         )}
