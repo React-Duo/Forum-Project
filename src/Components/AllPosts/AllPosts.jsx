@@ -11,6 +11,7 @@ import {
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext.jsx";
+import { or } from "firebase/firestore";
 
 const AllPosts = (props) => {
   const [posts, setPosts] = useState([]);
@@ -20,6 +21,7 @@ const AllPosts = (props) => {
   const [user, setUser] = useState();
   const navigate = useNavigate();
   const [usersDetails, setUserDetails] = useState([])
+  const [searchInput, setSearchInput] = useState("")
 
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
@@ -33,7 +35,14 @@ const AllPosts = (props) => {
             Object.keys(b[1].postLikedBy).length -
             Object.keys(a[1].postLikedBy).length
         );
-      } else {
+      } else if( order === "search" || order === "search2") {
+        if(searchInput !== ""){
+          posts = posts.filter(post => post[1].postTitle.toLowerCase().includes(searchInput.toLowerCase()))
+        } else{ 
+          posts.sort((a, b) => new Date(b[1].date) - new Date(a[1].date));
+        }
+      }
+       else {
         posts.sort((a, b) => new Date(b[1].date) - new Date(a[1].date));
       }
       setPosts(posts);
@@ -69,8 +78,10 @@ const AllPosts = (props) => {
       ) : (
         <div className="options">
           <div className="search">
-            <input placeholder="Search..." type="text"></input>
-            <button type="submit">Go</button>
+            <input value={searchInput} onChange={(e) =>{ 
+            setSearchInput(e.target.value)
+            }} placeholder="Search..." type="text"></input>
+            <button onClick={() => {order==="search" ? setOrder("search2") : setOrder("search")}} type="submit">Go</button>
           </div>
           <div className="rightSideOptions">
             <button onClick={() => navigate("/create-post")}>Create</button>
