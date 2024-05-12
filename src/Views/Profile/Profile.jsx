@@ -12,7 +12,7 @@ import {
   ALPHA_NUMERIC_REGEX,
   SPECIAL_CHARS_REGEX,
 } from "../../common/constants.js";
-import { uploadFile } from "../../service/storage.js";
+import { uploadFile, getFile } from "../../service/storage.js";
 
 const Profile = () => {
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
