@@ -78,6 +78,7 @@
 
 #profileImage {
   width: 11em;
+  height: 11em;
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.654);
   margin: auto;
@@ -88,7 +89,7 @@
 #imgSection img {
   width: 11em;
   height: 11em;
-  border-radius: 50%;
+  border-radius: 15px;
 }
 
 #changePhotoForm {

@@ -13,6 +13,7 @@ import {
   SPECIAL_CHARS_REGEX,
 } from "../../common/constants.js";
 import { uploadFile, getFile } from "../../service/storage.js";
+import { get } from "firebase/database";
 
 const Profile = () => {
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
@@ -94,23 +95,25 @@ const Profile = () => {
 
   const logoUpdate = (e) => {
     const file = e.target.files[0];
-    console.log(file);
+    // console.log(file);
     setLogo(file);
   };
 
-  const fetchPhoto = async () => {
-    console.log(user.username, logo.name);
-    // const url = await getFile(user.username, logo.name);
-    // console.log(url);
+  const updatePhotoInData = async () => {
+    const url = await getFile(user.username);
+    editCredential(user.username, "photo", url);
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      photo: url,
+    }));
   };
-  fetchPhoto();
 
   return (
     <div className="profileContainer">
       <div className="profileOptions">
         <div className="optionRow" id="imgSection">
           <div id="profileImage">
-            <img src={user?.photo}></img>
+            <img src={userDetails.photo}></img>
           </div>
           <form id="changePhotoForm">
             <label className="custum-file-upload" htmlFor="file">
@@ -143,15 +146,13 @@ const Profile = () => {
               ></input>
             </label>
             <button
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
-                uploadFile(user.username, logo, logo.name)
-                  .then(() => {
-                    console.log("File uploaded successfully");
-                  })
-                  .catch((error) => {
-                    console.error("Error uploading file:", error);
-                  });
+                if (logo.name) {
+                  await uploadFile(user.username, logo,)
+
+                  await updatePhotoInData();
+                }
               }}
             >
               Change photo
