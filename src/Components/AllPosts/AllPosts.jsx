@@ -19,6 +19,7 @@ const AllPosts = (props) => {
   const [order, setOrder] = useState(props.order);
   const [user, setUser] = useState();
   const navigate = useNavigate();
+  const [usersDetails, setUserDetails] = useState([])
 
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
 
@@ -49,6 +50,7 @@ const AllPosts = (props) => {
     const fetchUsers = async () => {
       let users = await getUsers();
       users = Object.entries(users);
+      setUserDetails(users);
       if (isLoggedIn.status) {
         const currentUsername = users.filter(
           (user) => user[1].emailAddress === isLoggedIn.user
@@ -82,13 +84,19 @@ const AllPosts = (props) => {
 
       <div className={`all-posts ${props.home ? "isHomeView" : ""}`}>
         {posts.slice(0, visiblePosts).map((post, index) => {
+          let currentUsername;
+          if(usersDetails.length > 0) {
+          currentUsername = usersDetails.filter(
+          (el) => el[1]?.username === post[1]?.postAuthor
+        )[0][1]
+          }
           return (
             <div
               className={`post ${props.home ? "isHomeViewPost" : ""}`}
               key={post[0]}
             >
               <div className="personDetails">
-                <img src={assets.profile}></img>
+                <img src={currentUsername?currentUsername.photo: assets.profile}></img>
                 <h4>{post[1]?.postAuthor}</h4>
               </div>
               <div className="postContent">
