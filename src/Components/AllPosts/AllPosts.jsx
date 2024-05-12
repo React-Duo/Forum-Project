@@ -112,7 +112,9 @@ const AllPosts = (props) => {
               </div>
               <div className="postContent">
                 <a onClick={() => navigate(`/posts/${post[0]}`)}>
-                  {post[1]?.postTitle}
+                {props.home
+                    ? post[1]?.postTitle?.substring(0, 45) + "..."
+                    : post[1]?.postTitle}
                 </a>
                 <p>
                   {props.home
