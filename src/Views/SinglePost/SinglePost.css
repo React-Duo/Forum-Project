@@ -2,38 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1000px;
+  width: 93%;
   margin: 0 auto;
   border: none;
-  background-color: rgba(247, 245, 242, 0.632);
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 30px;
   margin-top: 10px;
   color: #1A1A1A;
-}
-
-@media screen and (max-width: 980px) {
-  .singlePostContainer {
-    width: 800px;
-  }
-  
-}
-@media screen and (max-width: 822px) {
-  .singlePostContainer {
-    width: 600px;
-  }
-  
-}
-@media screen and (max-width: 620px) {
-  .singlePostContainer {
-    width: 450px;
-  }
-  
-}
-@media screen and (max-width: 490px) {
-  .singlePostContainer {
-    width: 390px;
-  }
-  
 }
