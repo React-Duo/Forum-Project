@@ -10,7 +10,6 @@ const Login = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
-    const [count, setCount] = useState(5);
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [form, setForm] = useState({
         emailAddress: '', 
@@ -40,13 +39,10 @@ const Login = () => {
 
     useEffect(() => {
         if (isLoginSuccessful) {
-            if (count === 0) {
-                setLoginState({status: true, user: form.emailAddress});
-                navigate('/');
-            }
-            else setTimeout(() => setCount(count - 1), 1000);
+            setLoginState({status: true, user: form.emailAddress});
+            navigate('/');
         }
-    }, [count, isLoginSuccessful]);
+    }, [isLoginSuccessful]);
 
     const loginUser = (event) => {        
         event.preventDefault();
@@ -63,15 +59,6 @@ const Login = () => {
     if (loading) {
         return (
             <div className='spinner'></div>
-        )
-    }
-
-    if (isLoginSuccessful) {
-        return (
-            <div className="login-success">
-                <p>You have logged in successfully!</p> <br /> <br />
-                <p>You will be redirected to Home page in {count} seconds...</p>
-            </div>
         )
     }
 
