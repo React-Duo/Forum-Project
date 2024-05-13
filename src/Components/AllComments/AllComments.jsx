@@ -5,6 +5,7 @@ import {
   getSingleComment,
   getUsers,
   updateCommentLikes,
+  removeComment,
 } from "../../service/request-service";
 import AuthContext from "../../Context/AuthContext";
 
@@ -15,29 +16,34 @@ const AllComments = (props) => {
   const [commentId, setCommentId] = useState(null);
 
   useEffect(() => {
-      const fetchUsers = async () => {
-        const users = await getUsers();
-        const user = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
-        setCurrentUser(user);
-      }
-      fetchUsers();
+    const fetchUsers = async () => {
+      const users = await getUsers();
+      const user = Object.values(users).find(
+        (user) => user.emailAddress === isLoggedIn.user
+      );
+      setCurrentUser(user);
+    };
+    fetchUsers();
   }, []);
 
   useEffect(() => {
-      const fetchComment = async () => {
-        const comment = await getSingleComment(commentId);
-        if (comment.commentLikedBy) {
-          if(comment.commentLikedBy[currentUser.username]) {
-            delete comment.commentLikedBy[currentUser.username];
-          } else {
-            comment.commentLikedBy = {...comment.commentLikedBy, [currentUser.username]: true}
-          }
+    const fetchComment = async () => {
+      const comment = await getSingleComment(commentId);
+      if (comment.commentLikedBy) {
+        if (comment.commentLikedBy[currentUser.username]) {
+          delete comment.commentLikedBy[currentUser.username];
         } else {
-          comment.commentLikedBy = {[currentUser.username]: true}
+          comment.commentLikedBy = {
+            ...comment.commentLikedBy,
+            [currentUser.username]: true,
+          };
         }
-        updateCommentLikes(commentId, comment.commentLikedBy);
-        props.fn();
-      };
+      } else {
+        comment.commentLikedBy = { [currentUser.username]: true };
+      }
+      updateCommentLikes(commentId, comment.commentLikedBy);
+      props.fn();
+    };
 
     if (commentId) fetchComment();
   }, [commentId]);
@@ -57,15 +63,18 @@ const AllComments = (props) => {
       {props.comments &&
         (props.comments.length ? (
           props.comments.map((comment) => {
-      const thumbsUp = comment.commentLikedBy && currentUser && comment.commentLikedBy[currentUser.username] 
-                        ? ("fa-solid fa-thumbs-up fa-lg thumbs-up-liked") 
-                        : ("fa-solid fa-thumbs-up fa-lg");
+            const thumbsUp =
+              comment.commentLikedBy &&
+              currentUser &&
+              comment.commentLikedBy[currentUser.username]
+                ? "fa-solid fa-thumbs-up fa-lg thumbs-up-liked"
+                : "fa-solid fa-thumbs-up fa-lg";
             let currentUsername;
             if (usersDetails.length > 0) {
               currentUsername = usersDetails.filter(
                 (el) => el[1]?.username === comment?.commentAuthor
               )[0][1];
-            }        
+            }
             return (
               <div className="comment" key={comment.id}>
                 <div className="personDetails">
@@ -90,7 +99,24 @@ const AllComments = (props) => {
                       : 0}
                   </p>
                   <p>{comment.date}</p>
+                  {comment.commentAuthor === currentUser?.username ||
+                  currentUser?.role === "admin" ? (
+                    <div className="editOptions">
+                      <a>
+                        <i
+                          onClick={() => {
+                            removeComment(comment.id);
+                            props.fn();
+                          }}
+                          className="fa-solid fa-trash"
+                        ></i>
+                      </a>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
+
                 <hr />
               </div>
             );
@@ -99,7 +125,7 @@ const AllComments = (props) => {
           <h4>No Comments added yet.</h4>
         ))}
     </div>
-  )
+  );
 };
 
 export default AllComments;
