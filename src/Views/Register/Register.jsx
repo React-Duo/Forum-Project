@@ -45,6 +45,7 @@ const Register = () => {
                         emailAddress: form.emailAddress, 
                         username: form.username, 
                         role: 'author',
+                        isBlocked: false,
                         photo: "https://firebasestorage.googleapis.com/v0/b/reactduo-forumproject.appspot.com/o/users%2Fall%2Fall?alt=media&token=341ed089-9a17-4908-840b-436d10677928"
                     });
 
