@@ -1,9 +1,12 @@
 .authenticated-hoc {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    border: solid 5px black;
     padding: 5%;
+    height: 100vh;
+    font-size: 30px;
+    color: rgba(123, 6, 6, 0.788);
+}
+
+.auth-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
