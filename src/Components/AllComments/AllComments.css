@@ -39,13 +39,23 @@
     width: 900px;
   }
 }
-@media (max-width: 950px) {
+@media (max-width: 980px) {
   .allComments {
-    width: 600px;
+    width: 700px;
+  }
+}
+@media (max-width: 822px) {
+  .allComments {
+    width: 500px;
   }
 }
 @media (max-width: 620px) {
   .allComments {
     width: 390px;
+  }
+}
+@media (max-width: 490px) {
+  .allComments {
+    width: 340px;
   }
 }

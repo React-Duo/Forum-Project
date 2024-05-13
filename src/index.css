@@ -4,10 +4,34 @@
     box-sizing: border-box;
 }
 
-body{
+/* body{
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(to bottom, #ffffff, #7e7979);
     color: #333333;
     background-size: cover;
     background-attachment: fixed;
+} */
+
+.light-theme{
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, #ffffff, #7e7979);
+    color: #333333;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.dark-theme{
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, #121111, #292b67);
+    color: #ffffff;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.dark-themeH1{
+    color: white !important;
+}
+
+.light-themeH1{
+    color: #333333 !important;
 }
