@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./AllComments.css";
 import { assets } from "../../assets/assets";
 import {
@@ -11,25 +11,36 @@ import AuthContext from "../../Context/AuthContext";
 const AllComments = (props) => {
   const { isLoggedIn } = useContext(AuthContext);
   const [usersDetails, setUserDetails] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [commentId, setCommentId] = useState(null);
 
-  const handleLikes = async (commentId) => {
-    const users = await getUsers();
-    const currentUser = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
-    const comment = await getSingleComment(commentId);
-
-    if (comment.commentLikedBy) {
-      if(comment.commentLikedBy[currentUser.username]) {
-        delete comment.commentLikedBy[currentUser.username];
-      } else {
-        comment.commentLikedBy = {...comment.commentLikedBy, [currentUser.username]: true}
+  useEffect(() => {
+      const fetchUsers = async () => {
+        const users = await getUsers();
+        const user = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);
+        setCurrentUser(user);
       }
-    } else {
-      comment.commentLikedBy = {[currentUser.username]: true}
-    }
+      fetchUsers();
+  }, []);
 
-    updateCommentLikes(commentId, comment.commentLikedBy);
-    props.fn();
-  };
+  useEffect(() => {
+      const fetchComment = async () => {
+        const comment = await getSingleComment(commentId);
+        if (comment.commentLikedBy) {
+          if(comment.commentLikedBy[currentUser.username]) {
+            delete comment.commentLikedBy[currentUser.username];
+          } else {
+            comment.commentLikedBy = {...comment.commentLikedBy, [currentUser.username]: true}
+          }
+        } else {
+          comment.commentLikedBy = {[currentUser.username]: true}
+        }
+        updateCommentLikes(commentId, comment.commentLikedBy);
+        props.fn();
+      };
+
+    if (commentId) fetchComment();
+  }, [commentId]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -46,6 +57,9 @@ const AllComments = (props) => {
       {props.comments &&
         (props.comments.length ? (
           props.comments.map((comment) => {
+      const thumbsUp = comment.commentLikedBy && currentUser && comment.commentLikedBy[currentUser.username] 
+                        ? ("fa-solid fa-thumbs-up fa-lg thumbs-up-liked") 
+                        : ("fa-solid fa-thumbs-up fa-lg");
             let currentUsername;
             if (usersDetails.length > 0) {
               currentUsername = usersDetails.filter(
@@ -68,8 +82,8 @@ const AllComments = (props) => {
                 <div className="interactions">
                   <p>
                     <i
-                      className="fa-solid fa-thumbs-up fa-lg"
-                      onClick={() => handleLikes(comment.id)}
+                      className={thumbsUp}
+                      onClick={() => setCommentId(comment.id)}
                     ></i>
                     {comment.commentLikedBy
                       ? Object.keys(comment.commentLikedBy).length
