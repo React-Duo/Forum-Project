@@ -44,6 +44,7 @@ const AllComments = (props) => {
         comment.commentLikedBy = { [currentUser.username]: true };
       }
       updateCommentLikes(commentId, comment.commentLikedBy);
+      setCommentId(null);
       props.fn();
     };
 
