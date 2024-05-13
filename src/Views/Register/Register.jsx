@@ -131,6 +131,7 @@ const Register = () => {
 
     return (
         <form onSubmit={register} className="register-form">
+            <h2>Register</h2>
             {error && <div>{error}</div>} <br />
             <span><label htmlFor="firstName">First Name </label><input type="text" name="firstName" id='firstName' required /></span> <br />
             <h5><i>/ First name must be between 4 and 32 characters long. /</i></h5> <br />
