@@ -26,6 +26,7 @@ const PostById = () => {
   const { isLoggedIn, setLoginState } = useContext(AuthContext);
   const navigate = useNavigate();
   const [role, setRole] = useState();
+  const [photo, setPhoto] = useState();
 
   useEffect(() => {
     const getSinglePost = async () => {
@@ -51,6 +52,19 @@ const PostById = () => {
     };
     fetchUsers();
   }, [user, status]);
+
+
+  useEffect(() => {
+    const getPhoto = async () => {
+      const users = await getUsers();
+      const currentUser = Object.entries(users).filter(el => el[1]?.username === post?.postAuthor)
+      if(currentUser[0]){
+        setPhoto(currentUser[0][1]?.photo);
+      }
+    }
+    getPhoto();
+  }, [post])
+ 
 
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -100,7 +114,7 @@ const PostById = () => {
       <div>
         <div className="postById">
           <div className="personDetails">
-            <img src={assets.profile}></img>
+            <img src={photo?photo:assets.profile}></img>
             <h4>{post.postAuthor}</h4>
           </div>
           <div className="postContent">
