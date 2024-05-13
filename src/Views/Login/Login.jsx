@@ -63,7 +63,9 @@ const Login = () => {
     }
 
     return (
+        <div className='loginContainer'>
         <form onSubmit={loginUser} className="login-form">
+        <h2>Login</h2>
             {error && <div>{error}</div>} <br />
             <span><label htmlFor="email">Email address </label>
             <input type="email" name="email" id="email" required /></span> 
@@ -73,6 +75,7 @@ const Login = () => {
             <br />
             <button type="submit">Login</button>
         </form>
+        </div>
     )
 }
 

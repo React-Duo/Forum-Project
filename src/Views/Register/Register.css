@@ -1,27 +1,72 @@
 .register-form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    --input-focus: #2d8cf0;
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: beige;
+  --main-color: black;
+  padding: 40px;
+  background: rgb(60,215,248);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-weight: bold;
+}
+
+.register-form label {
+    display: inline-block;
+    font-size: 22px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
-    background-color: rgb(189, 189, 189);
-    transform: translate(-50%, -50%);
-    border: solid 5px rgb(4, 149, 222);
-    height: auto;
-    width: auto;
-    margin: 5px;
-    padding: 15px;
-    color: rgb(29, 29, 29);
+    width: 150px; 
+}
+
+.register-form h2{
+    font-family: "Poetsen One", sans-serif;
+    font-size: 27px;
+}
+
+.register-form input {
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--font-color);
+    padding: 0px 10px;
+    outline: none;
+}
+
+.register-form input:hover {
+    background-color: orange; 
+    transition: background-color 0.3s ease; 
 }
 
 .register-form button {
-    border: solid 5px rgb(4, 149, 222);
-    font-size: 18px;
-    font-weight: bold;
-    width: 120px; 
-    height: 50px;
+    cursor: pointer;
+    width: 120px;
+    height: 40px;
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+    color: var(--font-color);
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
 }
 
 .register-form button:active {
@@ -97,3 +142,22 @@
     padding: 1rem 2rem;
   }
 }
+
+@media (max-width: 550px) {
+
+    .register-form {
+        width: 400px;
+    }
+    
+  }
+  
+  
+@media (max-width: 440px) {
+
+    .register-form {
+        width: 350px;
+    }
+    
+  }
+  
+  
