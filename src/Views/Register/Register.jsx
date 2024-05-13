@@ -10,7 +10,7 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isRegSuccessful, setIsRegSuccessful] = useState(false);
-    const [count, setCount] = useState(7);
+    const [enterWebsite, setEnterWebsite] = useState(false);
     const [form, setForm] = useState({
         firstName: '',
         lastName: '',
@@ -65,13 +65,12 @@ const Register = () => {
 
     useEffect(() => {
         if (isRegSuccessful) {
-            if (count === 0) {
+            if (enterWebsite) {
                 setLoginState({status: true, user: form.emailAddress});
                 navigate('/');
             }
-            else setTimeout(() => setCount(count - 1), 1000);
         }
-    }, [count, isRegSuccessful]);
+    }, [enterWebsite, isRegSuccessful]);
 
     const register = (event) => {
         event.preventDefault();        
@@ -125,7 +124,7 @@ const Register = () => {
             <div className="registration-success">
                 <p>Welcome onboard!</p> <br />
                 <p>You have registered successfully!</p> <br /> <br />
-                <p>You will be redirected to Home page in {count} seconds...</p>
+                <button className="button-43" role="button" onClick={() => setEnterWebsite(true)}>Go to Home page</button>
             </div>
         )
     }
