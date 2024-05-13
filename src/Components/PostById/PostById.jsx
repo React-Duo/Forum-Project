@@ -123,7 +123,9 @@ const PostById = () => {
           </div>
           <div className="interactions">
             <p>
-              <i className="fa-solid fa-thumbs-up fa-lg" onClick={() => handleLikes(postId)}></i>
+              <i className={post.likes.length && post.likes.includes(user) 
+                  ? ("fa-solid fa-thumbs-up fa-lg thumbs-up-liked")
+                  : ("fa-solid fa-thumbs-up fa-lg")} onClick={() => handleLikes(postId)}></i>
               {post.likes.length}
             </p>
             <p>
