@@ -12,7 +12,7 @@
   width: 100%;
   margin: 0 auto;
   border: none;
-  background-color: rgba(247, 245, 242, 0.632);
+  background-color: rgba(247, 245, 242, 0.184);
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 30px;
@@ -20,16 +20,8 @@
 }
 
 .isHomeView {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 550px;
   margin: 0 auto;
-  border: none;
-  background-color: rgba(247, 245, 242, 0.632);
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 30px;
 }
 
 .post {
@@ -42,23 +34,14 @@
   padding: 10px;
   border: 1px solid #f1f1f1;
   border-radius: 5px;
-  background-color: #f1f1f1;
+  background-color: #f1f1f193;
   box-shadow: 1px 1px 3px black;
+  color: black;
 }
 
 .isHomeViewPost {
-  max-width: 1300px;
   width: 500px;
   height: 180px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #f1f1f1;
-  border-radius: 5px;
-  background-color: #f1f1f1;
-  box-shadow: 1px 1px 3px black;
 }
 
 .postsContainer {
@@ -234,6 +217,9 @@
     width: 400px;
   }
 
+  .isHomeViewPost {
+    height: 220px;
+  }
   .post {
     max-width: 350px;
   }
@@ -247,6 +233,7 @@
   .search input[type="text"] {
     width: 230px;
   }
+  
 }
 
 @media (max-width: 485px) {

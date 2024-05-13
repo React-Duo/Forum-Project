@@ -116,13 +116,23 @@ form h5 i {
       width: 900px;
     }
   }
-  @media (max-width: 950px) {
+  @media (max-width: 980px) {
     .addComment {
-      width: 600px;
+      width: 700px;
+    }
+  }
+  @media (max-width: 822px) {
+    .addComment {
+      width: 500px;
     }
   }
   @media (max-width: 620px) {
     .addComment {
       width: 390px;
+    }
+  }
+  @media (max-width: 490px) {
+    .addComment {
+      width: 340px;
     }
   }

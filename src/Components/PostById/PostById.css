@@ -1,5 +1,5 @@
 .postById {
-    width: 1500px;
+  width: 1500px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -91,13 +91,23 @@
     }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 980px) {
     .postById {
-      width: 600px;
+      width: 700px;
+    }
+}
+@media (max-width: 822px) {
+    .postById {
+      width: 500px;
     }
 }
 @media (max-width: 620px) {
     .postById {
       width: 390px;
+    }
+}
+@media (max-width: 490px) {
+    .postById {
+      width: 340px;
     }
 }

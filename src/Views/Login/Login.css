@@ -8,6 +8,11 @@
     margin: 5% 40% 5% 40%;
     padding-top: 40px;
     padding-bottom: 40px;
+    color: rgb(29, 29, 29);
+    width: 390px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .login-form span {
