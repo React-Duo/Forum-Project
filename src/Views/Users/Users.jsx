@@ -7,19 +7,18 @@ const Users = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [users, setUsers] = useState(null);
-    const [userToBlock, setUserToBlock] = useState(null);
-    const [userToUnblock, setUserToUnblock] = useState(null);
+    const [userBlock, setUserBlock] = useState(null);
 
     const handleUserSearch = async () => {
-        setLoading(true);
         try {
+            setLoading(true);
             const data = await searchUser(searchParams.searchString, searchParams.searchTerm);
             if (data === "Data not found!") {
                 throw new Error("No users matched the search criteria.");
             }
-            setError(null);
             const filteredUsers = Object.entries(data).map(([key, user]) => user = {id: key, ...user});
             setUsers(filteredUsers);
+            setError(null);
         } catch (error) {
             setUsers(null);
             setError(error.message);
@@ -27,38 +26,24 @@ const Users = () => {
             setLoading(false);
         }
     };
-
-    useEffect(() => {if (searchParams) handleUserSearch()}, [searchParams, userToBlock, userToUnblock]);
-
-    useEffect(() => {
-        const blockUser = async () => {
-            try {
-                setLoading(true);
-                await editCredential(userToBlock.id, "isBlocked", true);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setUserToBlock(null);
-                setLoading(false);
-            }
+    
+    const handleUserBlock = async () => {
+        try {
+            setLoading(true);
+            if (userBlock.isBlocked) await editCredential(userBlock.id, "isBlocked", false);
+            else await editCredential(userBlock.id, "isBlocked", true);
+            setError(null);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+            setUserBlock(null);
         }
-        if (userToBlock) blockUser();
-    }, [userToBlock]);
+    }
 
-    useEffect(() => {
-        const unblockUser = async () => {
-            try {
-                setLoading(true);
-                await editCredential(userToUnblock.id, "isBlocked", false);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setUserToUnblock(null);
-                setLoading(false);
-            }
-        }
-        if (userToUnblock) unblockUser();
-    }, [userToUnblock]);
+    useEffect(() => {if (searchParams) handleUserSearch()}, [searchParams, userBlock]);
+
+    useEffect(() => {if (userBlock) handleUserBlock()}, [userBlock]);
 
     const handleSearchForm = (event) => {
         event.preventDefault();
@@ -91,18 +76,16 @@ const Users = () => {
             {users && 
                 <div className="users-list">
                     {users.map(user => {
-                        console.log(user);
                         return <div className="user-details" key={user.id}>
                                     <img src={user.photo} alt="" />
                                     <div>
                                         <label htmlFor="">Display Name: </label> {user.firstName} {user.lastName} {user.role === "admin" && "(Admin)"} <br />
                                         <label htmlFor="">Email address: </label> {user.emailAddress} <br />
                                         <label htmlFor="">Username: </label> {user.username} <br />
-                                        {console.log(user.isBlocked)}
                                         {user.role !== "admin" ? (user.isBlocked ? 
-                                            (<button onClick={() => setUserToUnblock(user)}>Unblock user</button>)
+                                            (<button onClick={() => setUserBlock(user)}>Unblock user</button>)
                                             :
-                                            (<button onClick={() => setUserToBlock(user)}>Block user</button>)
+                                            (<button onClick={() => setUserBlock(user)}>Block user</button>)
                                         ) : ''}
                                     </div>
                                 </div> 
