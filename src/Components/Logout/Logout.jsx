@@ -11,13 +11,6 @@ const Logout = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (logoutSuccess) {
-            setLoginState({status: false, user: ''});
-            navigate('/');
-        }
-    }, [logoutSuccess]);
-
-    useEffect(() => {
         const logoutHandler = async () => {
             try {
                 setLoading(true);
@@ -31,6 +24,13 @@ const Logout = () => {
         }
         logoutHandler();
     }, []);
+
+    useEffect(() => {
+        if (logoutSuccess) {
+            setLoginState({status: false, user: ''});
+            navigate('/');
+        }
+    }, [logoutSuccess]);
 
     if (loading) {
         return (
