@@ -1,19 +1,18 @@
 import React, { useState, useEffect, useContext} from "react";
-import "./CreatePostForm.css";
+import { useNavigate } from 'react-router-dom';
 import { createPost, getPosts, getUsers, } from "../../service/request-service";
 import AuthContext from '../../Context/AuthContext.jsx';
-
+import "./CreatePostForm.css";
 
 const CreatePostForm = () => {
   const [posts, setPosts] = useState([]);
-  const [form, setForm] = useState({
-    title: '',
-    description: ''
-  })
   const [user, setUser] = useState();
-  const { isLoggedIn, setLoginState } = useContext(AuthContext);
+  const [newPost, setNewPost] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  
   useEffect(() => {
     const fetchPosts = async () => {
       let posts = await getPosts();
@@ -34,26 +33,39 @@ const CreatePostForm = () => {
     fetchUsers();
   }, []);
 
-
-  const [confirmationMessage, setConfirmationMessage] = useState(false);
-
-
+  useEffect(() => {
+    const addPost = async () => {
+      try {
+        setLoading(true);
+        const maxId = Math.max(...posts.map(post => post[1].Id));
+        await createPost({
+          Id: maxId + 1,
+          postTitle: newPost.postTitle,
+          postContent: newPost.postContent,
+          date: new Date().toLocaleDateString(),
+          postLikedBy: {},
+          postAuthor: user,
+        });
+        setLoading(false);
+        setError(null);
+        navigate(`/posts/${maxId + 1}`);
+      } catch (error) {
+        setLoading(false);
+        setError(error.message);
+      } 
+    }
+    if (newPost) addPost();
+  }, [newPost])
 
   const submitHandler = async (e) => {
-    let maxId = Math.max(...posts.map(post => post[1].Id));
     e.preventDefault();
-    try {
-      const post = await createPost({
-        Id: maxId + 1,
-        postTitle: e.target.title.value,
-        postContent: e.target.description.value,
-        date: new Date().toLocaleDateString(),
-        postLikedBy: {},
-        postAuthor: user,
-      });
-      setConfirmationMessage(true)
-    } catch (error) {
-    }
+    const postTitle = e.target.title.value;
+    const postContent = e.target.description.value;
+    setNewPost({postTitle, postContent});
+  }
+
+  if (loading) {
+    return <div className="spinner"></div>
   }
 
   return (
@@ -83,14 +95,10 @@ const CreatePostForm = () => {
           <div className="modal__footer">
             <button  type="submit" className="buttonForm button--primary">Create post</button>
           </div>
+          {error && <div id="error">{error}</div>}
           </form>
         </div>
       </div>
-      { confirmationMessage? (
-          <div className="confirmationMessage">
-            <h2>Your post has been created!</h2>
-          </div>
-      ) : ""}
     </div>
   );
 };
