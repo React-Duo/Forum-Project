@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from '../../Context/AuthContext';
 import { createComment, getComments, getUsers } from '../../service/request-service';
 import "./AddComment.css";

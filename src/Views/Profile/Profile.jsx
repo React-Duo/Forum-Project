@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./Profile.css";
 import { getUsers, editCredential } from "../../service/request-service";
 import AuthContext from "../../Context/AuthContext.jsx";
@@ -11,11 +11,11 @@ import {
 } from "../../common/constants.js";
 import { uploadFile, getFile } from "../../service/storage.js";
 import { changePassword } from "../../service/authentication-service.js";
-import { set } from "firebase/database";
+
 
 
 const Profile = () => {
-  const { isLoggedIn, setLoginState } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const [user, setUser] = useState();
   const [userDetails, setUserDetails] = useState({
     firstName: "",

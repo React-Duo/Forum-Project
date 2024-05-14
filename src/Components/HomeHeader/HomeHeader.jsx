@@ -1,4 +1,3 @@
-import React from "react";
 import "./HomeHeader.css";
 import { assets } from "../../assets/assets";
 import { getPosts, getComments, getUsers } from "../../service/request-service";

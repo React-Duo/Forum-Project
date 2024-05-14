@@ -1,4 +1,3 @@
-import React from 'react'
 import './CreatePost.css'
 import CreatePostForm from '../../Components/CreatePostForm/CreatePostForm'
 

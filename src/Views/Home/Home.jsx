@@ -1,4 +1,3 @@
-import React from "react";
 import "./Home.css";
 import HomeHeader from "../../Components/HomeHeader/HomeHeader";
 import AllPosts from "../../Components/AllPosts/AllPosts";

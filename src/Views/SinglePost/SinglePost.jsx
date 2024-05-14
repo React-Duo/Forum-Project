@@ -1,4 +1,3 @@
-import React from "react";
 import PostById from "../../Components/PostById/PostById";
 import "./SinglePost.css";
 
