@@ -11,6 +11,26 @@ const AddComment = (props) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
+  const [blocked, setBlocked] = useState(false)
+  const [blockedMessage, setBlockedMessage] = useState(false)
+
+  const changeBlockedMessage = (e) => {
+    e.preventDefault();
+    setBlockedMessage(!blockedMessage)
+  }
+
+  useEffect(() => {
+    const getBlockedValue = async () => {
+      const users = await getUsers();
+      const allUsers = Object.entries(users);
+      const currentUsername = allUsers.filter(
+        (user) => user[1].emailAddress === isLoggedIn.user
+      )[0];
+      setBlocked(currentUsername[1].isBlocked)
+    };
+    getBlockedValue();
+  }, []) 
+
 
   const handleAddComment = async () => {
     setLoading(true);
@@ -19,7 +39,6 @@ const AddComment = (props) => {
       const comments = Object.entries(data).map(([key, comment]) => comment = {id: key, ...comment});
       const users = await getUsers();
       const author = Object.values(users).find(user => user.emailAddress === isLoggedIn.user);  
-
       const maxId = Math.max(...comments.map(comment => comment.id));
       const newComment = {
         id: maxId + 1,
@@ -57,12 +76,12 @@ const AddComment = (props) => {
 
   return (
     <div>
-      <form onSubmit={addComment} className="addComment">
+      <form onSubmit={blocked?changeBlockedMessage:addComment} className="addComment">
       <h4>Add comment</h4>
       <h5><i>/ Characters allowed: {MIN_CHARS} - {MAX_CHARS} /</i></h5>
           <textarea id="textarea" placeholder="Write your comment here"></textarea>
           {error && <div id="error">{error}</div>}
-          <button type="submit" className="buttonSend">Add<span></span></button>
+          {blockedMessage ? <div className="blockMsg"><h3>You are blocked from creating posts</h3></div> : ""}          <button type="submit" className="buttonSend">Add<span></span></button>
       </form>
     </div>
   );
