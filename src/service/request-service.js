@@ -1,5 +1,5 @@
 import database from '../config/firebase-config.js';
-import { ref, get, set, update, query, equalTo, orderByChild, orderByKey, goOnline, goOffline } from "firebase/database";
+import { ref, get, set, update, query, equalTo, orderByChild, goOnline } from "firebase/database";
 
 /**
  * Retrieves the list of users from the database.
