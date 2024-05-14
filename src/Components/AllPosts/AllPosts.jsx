@@ -10,6 +10,8 @@ import {
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext.jsx";
+import PropTypes from 'prop-types';
+
 
 
 const AllPosts = (props) => {
@@ -214,5 +216,10 @@ const AllPosts = (props) => {
     </div>
   );
 };
+
+AllPosts.propTypes = {
+  order: PropTypes.string,
+  home: PropTypes.bool
+}
 
 export default AllPosts;

@@ -8,6 +8,7 @@ import {
   removeComment,
 } from "../../service/request-service";
 import AuthContext from "../../Context/AuthContext";
+import PropTypes from 'prop-types';
 
 
 const AllComments = (props) => {
@@ -142,5 +143,10 @@ const AllComments = (props) => {
     </div>
   );
 };
+
+AllComments.propTypes = {
+  comments: PropTypes.array,
+  fn: PropTypes.func,
+}
 
 export default AllComments;

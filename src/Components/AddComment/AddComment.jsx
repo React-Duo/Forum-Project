@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from '../../Context/AuthContext';
 import { createComment, getComments, getUsers } from '../../service/request-service';
 import "./AddComment.css";
+import PropTypes from 'prop-types';
 
 const MIN_CHARS = 1;
 const MAX_CHARS = 300;
@@ -86,5 +87,10 @@ const AddComment = (props) => {
     </div>
   );
 };
+
+AddComment.propTypes = {
+  relatedPost: PropTypes.number,
+  fn: PropTypes.func
+}
 
 export default AddComment;

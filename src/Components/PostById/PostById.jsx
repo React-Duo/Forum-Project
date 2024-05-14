@@ -23,7 +23,7 @@ const PostById = () => {
   const [post, setPost] = useState(null);
   const [status, setStatus] = useState(false);
   const [user, setUser] = useState();
-  const { isLoggedIn, setLoginState } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [role, setRole] = useState();
   const [photo, setPhoto] = useState();
