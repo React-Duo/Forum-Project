@@ -15,6 +15,7 @@ const AllComments = (props) => {
   const [usersDetails, setUserDetails] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [commentId, setCommentId] = useState(null);
+  const [showAllComments, setShowAllComments] = useState(false); 
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -60,12 +61,16 @@ const AllComments = (props) => {
     fetchUsers();
   }, [isLoggedIn]);
 
+  const toggleShowAllComments = () => {
+    setShowAllComments(!showAllComments);
+  };
+
   return (
     <div className="allComments">
       <h5>All comments</h5>
       {props.comments &&
         (props.comments.length ? (
-          props.comments.map((comment) => {
+          (showAllComments ? props.comments : props.comments.slice(0, 5)).map((comment) => {
             const thumbsUp =
               comment.commentLikedBy &&
               currentUser &&
@@ -127,6 +132,13 @@ const AllComments = (props) => {
         ) : (
           <h4>No Comments added yet.</h4>
         ))}
+        {props.comments && props.comments.length > 5 && (
+        <button className="show-more" onClick={toggleShowAllComments}>
+          <i className="animation"></i>
+          {showAllComments ? "Show Less" : "Show More"}
+          <i className="animation"></i>
+        </button>
+      )}
     </div>
   );
 };
