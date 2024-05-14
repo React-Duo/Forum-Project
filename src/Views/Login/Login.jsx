@@ -57,8 +57,9 @@ const Login = () => {
     }
 
     if (loading) {
-        return (
+        return (<div className='spinnerContainer'>
             <div className='spinner'></div>
+            </div>
         )
     }
 

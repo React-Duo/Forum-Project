@@ -99,6 +99,10 @@
     animation: spin 1s linear infinite;
 }
 
+.spinnerContainer{
+    height: 100vh;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

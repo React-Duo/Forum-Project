@@ -130,6 +130,7 @@ const Register = () => {
     }
 
     return (
+        <div className='registerContainer'>
         <form onSubmit={register} className="register-form">
             <h2>Register</h2>
             {error && <div>{error}</div>} <br />
@@ -144,6 +145,7 @@ const Register = () => {
             <h5><i>/ Password requirements - at least: 8 characters, ONE digit, ONE letter, ONE special symbol /</i></h5> <br />
             <button type="submit">Register</button>
         </form>
+        </div>
     )
 
 }

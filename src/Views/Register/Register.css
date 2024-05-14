@@ -22,6 +22,10 @@
   font-weight: bold;
 }
 
+.registerContainer{
+    height: 100vh;
+}
+
 .register-form label {
     display: inline-block;
     font-size: 22px;
