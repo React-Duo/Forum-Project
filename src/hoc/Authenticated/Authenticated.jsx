@@ -2,6 +2,13 @@ import { useContext } from "react";
 import AuthContext from "../../Context/AuthContext";
 import "./Authenticated.css";
 
+/**
+ * Renders the Authenticated higher-order component.
+ *
+ * @component
+ * @param {ReactNode} props.children - The child components to render if the user is authenticated.
+ * @returns {ReactNode} The rendered component.
+ */
 const Authenticated = ({ children }) => {
   const { isLoggedIn } = useContext(AuthContext);
 
