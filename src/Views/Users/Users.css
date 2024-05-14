@@ -1,6 +1,7 @@
 .usersContainer {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .search-form {
@@ -150,6 +151,10 @@ div #error {
   width: 40px;
   height: 40px;
   animation: spin 2s linear infinite;
+}
+
+#error{
+  text-align: center;
 }
 
 @keyframes spin {
