@@ -57,18 +57,18 @@ const Users = () => {
     }
 
     return (
-        <div>
+        <div className='usersContainer'>
             <form onSubmit={handleSearchForm} className="search-form">
                 <input type="text" id="searchField" name="searchField" placeholder="Search users..." required/> <br />
                 <span>
                     <input type="radio" value="firstName" id="firstName" name="searchType" required /> 
-                    <label htmlFor="firstName">First Name</label>
+                    <label className='labelText' htmlFor="firstName">First Name</label>
                     <input type="radio" value="lastName" id="lastName" name="searchType" required /> 
-                    <label htmlFor="lastName">Last Name</label>
+                    <label className='labelText' htmlFor="lastName">Last Name</label>
                     <input type="radio" value="emailAddress" id="emailAddress" name="searchType" required /> 
-                    <label htmlFor="emailAddress">Email Address</label>
+                    <label className='labelText' htmlFor="emailAddress">Email Address</label>
                     <input type="radio" value="username" id="username" name="searchType" required /> 
-                    <label htmlFor="username">Username</label>
+                    <label className='labelText' htmlFor="username">Username</label>
                 </span><br />
                 <button type="submit">Search</button>
             </form>
