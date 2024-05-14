@@ -22,8 +22,14 @@ const AllPosts = (props) => {
   const navigate = useNavigate();
   const [usersDetails, setUserDetails] = useState([])
   const [searchInput, setSearchInput] = useState("")
+  const [blocked, setBlocked] = useState(false)
+  const [blockedMessage, setBlockedMessage] = useState(false)
 
   const { isLoggedIn } = useContext(AuthContext);
+
+  const changeBlockedMessage = () => {
+    setBlockedMessage(!blockedMessage)
+  }
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -63,8 +69,9 @@ const AllPosts = (props) => {
       if (isLoggedIn.status) {
         const currentUsername = users.filter(
           (user) => user[1].emailAddress === isLoggedIn.user
-        )[0][0];
-        setUser(currentUsername);
+        )[0];
+        setBlocked(currentUsername[1].isBlocked)
+        setUser(currentUsername[0]);
       }
     };
     fetchUsers();
@@ -84,7 +91,12 @@ const AllPosts = (props) => {
             <button onClick={() => {order==="search" ? setOrder("search2") : setOrder("search")}} type="submit">Go</button>
           </div>
           <div className="rightSideOptions">
-            <button onClick={() => navigate("/create-post")}>Create</button>
+            <button onClick={() => {if(blocked) {
+              changeBlockedMessage()
+            } else{
+              navigate("/create-post")
+            }
+              }}>Create</button>
             <div className="orderOptions">
               <a onClick={() => setOrder("top")}>Top</a>
               <a onClick={() => setOrder("recent")}>Recent</a>
@@ -92,7 +104,7 @@ const AllPosts = (props) => {
           </div>
         </div>
       )}
-
+      {blockedMessage ? <div className="blockMsg"><h3>You are blocked from creating posts</h3></div> : ""}
       <div className={`all-posts ${props.home ? "isHomeView" : ""}`}>
         {posts.slice(0, visiblePosts).map((post, index) => {
           let currentUsername;

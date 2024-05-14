@@ -213,6 +213,12 @@
 .liked {
   color: rgb(244, 59, 93);
 }
+
+.blockMsg{
+  text-align: center;
+  font-size: 21px;
+}
+
 @media (max-width: 600px) {
   .all-posts {
     width: 400px;
