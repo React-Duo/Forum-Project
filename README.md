@@ -4,6 +4,9 @@
 This is a forum website built with React and Firebase database.
 
 ## Setup
+Run the URL: [reactduo-forumproject.web.app](https://reactduo-forumproject.web.app/)
+
+Or
 
 To run the project locally, follow these steps:
 
