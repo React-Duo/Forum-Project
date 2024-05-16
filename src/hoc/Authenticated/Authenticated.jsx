@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import AuthContext from "../../Context/AuthContext";
 import "./Authenticated.css";
+import PropTypes from 'prop-types';
 
 /**
  * Renders the Authenticated higher-order component.
@@ -22,5 +23,9 @@ const Authenticated = ({ children }) => {
       </div>
     );
 };
+
+Authenticated.propTypes = {
+  children: PropTypes.node.isRequired
+}
 
 export default Authenticated;

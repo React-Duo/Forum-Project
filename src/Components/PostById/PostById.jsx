@@ -176,7 +176,7 @@ const PostById = () => {
           </div>
         )}
         <AllComments comments={post.comments} fn={updateState}/>
-        <AddComment relatedPost={postId} fn={updateState}/>
+        <AddComment relatedPost={+postId} fn={updateState}/>
       </div>
     )
   );
